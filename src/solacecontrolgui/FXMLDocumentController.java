@@ -5,8 +5,11 @@
  */
 package solacecontrolgui;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +22,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -28,12 +33,14 @@ import javafx.stage.Stage;
  */
 public class FXMLDocumentController implements Initializable {
     
-    @FXML
-    private Label label;
+    
+  
+    String fileToLoad;    
+    //Home Page 
     
     @FXML
     private Label timer;
-    
+    // Home button 1 , 2 ,3 
     @FXML
     private Button btn1;
     
@@ -49,16 +56,21 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Label breadcrumb;
     
+    
+    // Page 2
    @FXML
     private Label breadcrumb2;
    
+   @FXML
+    private Label fileLoadedName;
+   
+    //for file loader
+    List<String> lstFile;
+    
+    
     
    
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
-    }
+
     
    @FXML
     private void missionControlBtn(ActionEvent event) {
@@ -78,10 +90,32 @@ public class FXMLDocumentController implements Initializable {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
 }
+      @FXML
+    private void loadConfig(ActionEvent event) {
+        
+        FileChooser fc = new FileChooser();
+        fc.getExtensionFilters().add(new ExtensionFilter("Word Files" , lstFile));
+        File f = fc.showOpenDialog(null);
+        
+        if (f!= null)
+        {
+           System.out.println("loadedfile" + f.getAbsolutePath()); 
+           fileToLoad = f.getAbsolutePath(); 
+           
+           fileLoadedName.setText("file Loaded:"  + fileToLoad);
+        }
+        else {
+             fileLoadedName.setText("file was not selected or is invalid");
+        }
+        
+    }
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        // change this too allow more files to be loaded
+        lstFile= new ArrayList<>();
+        lstFile.add("*.json");
     }    
     
 }
