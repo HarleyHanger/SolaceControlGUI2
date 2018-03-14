@@ -243,7 +243,7 @@
                            <children>
                               <HBox alignment="CENTER">
                                  <children>
-                                    <Button fx:id="loadConfigBtn" mnemonicParsing="false" onAction="#loadConfig" text="Load Configuration">
+                                    <Button mnemonicParsing="false" onAction="#loadConfig" text="Load Configuration">
                                        <HBox.margin>
                                           <Insets right="20.0" top="10.0" />
                                        </HBox.margin>
@@ -251,7 +251,7 @@
                                           <Font size="16.0" />
                                        </font>
                                     </Button>
-                                    <Button mnemonicParsing="false" text="Save Configuration">
+                                    <Button mnemonicParsing="false" onAction="#saveConfig" text="Save Configuration">
                                        <HBox.margin>
                                           <Insets top="10.0" />
                                        </HBox.margin>

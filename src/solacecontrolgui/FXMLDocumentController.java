@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -67,7 +68,7 @@ public class FXMLDocumentController implements Initializable {
     //for file loader
     List<String> lstFile;
     
-    
+    Formatter x;
     
    
 
@@ -109,7 +110,10 @@ public class FXMLDocumentController implements Initializable {
         }
         
     }
-    
+    @FXML
+    private void saveConfig(ActionEvent event){
+        
+    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
