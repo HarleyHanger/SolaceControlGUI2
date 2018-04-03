@@ -89,6 +89,23 @@ public class MissionControlController implements Initializable {
     private VBox headerBar;
 
     
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        startLatSpinner.setEditable(true);
+        
+        startLatSpinner.focusedProperty().addListener((observable, oldValue, newValue) -> 
+        { 
+        if (!newValue ) 
+        {
+            commitValue();
+            
+        }
+       });
+        
+               // change this too allow more files to be loaded
+        lstFile= new ArrayList<>();
+        lstFile.add("*.json");
+    }    
     
     @FXML
   private void loadConfig(ActionEvent event) {
@@ -206,15 +223,14 @@ public class MissionControlController implements Initializable {
         }
     }
     
-   
+    private void commitValue(){
+       // String latInputString = startLatSpinner.getValue().toString();
+       // double latInput = Double.parseDouble(latInputString);
+        startLatSpinner.increment(0);
+        System.out.println(startLatSpinner.getValue().toString());
+    }
     
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-               // change this too allow more files to be loaded
-        lstFile= new ArrayList<>();
-        lstFile.add("*.json");
-    }    
+    
    
 }
 

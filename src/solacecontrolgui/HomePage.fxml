@@ -77,17 +77,17 @@
                      <center>
                         <VBox alignment="CENTER" BorderPane.alignment="CENTER">
                            <children>
-                              <Button fx:id="btn1" minHeight="40.0" minWidth="100.0" mnemonicParsing="false" onAction="#missionControlBtn" text="Mission Control">
+                              <Button fx:id="btn1" minHeight="40.0" minWidth="120.0" mnemonicParsing="false" onAction="#missionControlBtn" text="Mission Control">
                                  <VBox.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </VBox.margin>
                               </Button>
-                              <Button fx:id="btn2" minHeight="40.0" minWidth="100.0" mnemonicParsing="false" text="Page 2">
+                              <Button fx:id="btn2" minHeight="40.0" minWidth="120.0" mnemonicParsing="false" text="Project Overview">
                                  <VBox.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </VBox.margin>
                               </Button>
-                              <Button fx:id="btn3" minHeight="40.0" minWidth="100.0" mnemonicParsing="false" text="Page 3">
+                              <Button fx:id="btn3" minHeight="40.0" minWidth="120.0" mnemonicParsing="false" text="Data Analysis">
                                  <VBox.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </VBox.margin>

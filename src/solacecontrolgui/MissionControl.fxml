@@ -92,9 +92,9 @@
                                     <Insets right="10.0" />
                                  </HBox.margin>
                               </Label>
-                              <Spinner fx:id="startLatSpinner">
+                              <Spinner fx:id="startLatSpinner" onMouseReleased="#saveConfig">
                                 <valueFactory>
-                                    <SpinnerValueFactory.DoubleSpinnerValueFactory max="90" min="0" />
+                                    <SpinnerValueFactory.DoubleSpinnerValueFactory max="90" min="-90" initialValue="0"  />
                                 </valueFactory>
                             </Spinner>
                            </children>
