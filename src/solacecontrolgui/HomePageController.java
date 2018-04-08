@@ -6,7 +6,15 @@
 package solacecontrolgui;
 
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.ResourceBundle;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -43,6 +51,10 @@ public class HomePageController implements Initializable {
     @FXML
     private Label breadcrumb;
     
+    private int minute;
+    private int hour;
+    private int second;
+    
        
     @FXML
     private void missionControlBtn(ActionEvent event) throws Exception{
@@ -60,6 +72,18 @@ public class HomePageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        
+      DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd - HH:mm:ss");
+    //get current date time with Date()
+    Date date = new Date();
+    System.out.println(dateFormat.format(date));
+ 
+    //get current date time with Calendar()
+    Calendar cal = Calendar.getInstance();
+    System.out.println(dateFormat.format(cal.getTime()));
+    timer.setText(dateFormat.format(cal.getTime()));
+    
+     
         
     }
 }

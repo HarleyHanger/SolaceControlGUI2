@@ -94,7 +94,7 @@
                               </Label>
                               <Spinner fx:id="startLatSpinner" onMouseReleased="#saveConfig">
                                 <valueFactory>
-                                    <SpinnerValueFactory.DoubleSpinnerValueFactory max="90" min="-90" initialValue="0"  />
+                                    <SpinnerValueFactory.DoubleSpinnerValueFactory initialValue="0" max="90" min="-90" />
                                 </valueFactory>
                             </Spinner>
                            </children>
@@ -293,7 +293,7 @@
                         </VBox>
                         <HBox alignment="CENTER">
                            <children>
-                              <Button mnemonicParsing="false" text="Run Configuration">
+                              <Button mnemonicParsing="false" onAction="#runConfig" text="Run Configuration">
                                  <HBox.margin>
                                     <Insets top="10.0" />
                                  </HBox.margin>

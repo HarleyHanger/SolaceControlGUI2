@@ -48,6 +48,7 @@ public class MissionControlController implements Initializable {
     String fileToLoad;    
     //Home Page 
     
+ 
    
     @FXML
     private Label fileLoadedName;
@@ -92,15 +93,13 @@ public class MissionControlController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         startLatSpinner.setEditable(true);
+        startLonSpinner.setEditable(true);
+        endLatSpinner.setEditable(true);
+        endLonSpinner.setEditable(true);
+        vesselWeightSpinner.setEditable(true);
+        vesselLengthSpinner.setEditable(true);
         
-        startLatSpinner.focusedProperty().addListener((observable, oldValue, newValue) -> 
-        { 
-        if (!newValue ) 
-        {
-            commitValue();
-            
-        }
-       });
+       
         
                // change this too allow more files to be loaded
         lstFile= new ArrayList<>();
@@ -223,14 +222,19 @@ public class MissionControlController implements Initializable {
         }
     }
     
-    private void commitValue(){
-       // String latInputString = startLatSpinner.getValue().toString();
-       // double latInput = Double.parseDouble(latInputString);
-        startLatSpinner.increment(0);
-        System.out.println(startLatSpinner.getValue().toString());
+   
+    @FXML
+    private void runConfig(ActionEvent event) {
+        System.out.println(" Run config Pressed " );
+        System.out.println(" Start lat + " + startLatSpinner.getEditor().getText());
+        System.out.println(" start Lon + " + startLonSpinner.getEditor().getText());
+        System.out.println(" end Lat + " + endLatSpinner.getEditor().getText());
+        System.out.println(" End lon + " + endLonSpinner.getEditor().getText());
+        System.out.println(" v length + " + vesselLengthSpinner.getEditor().getText());
+        System.out.println(" v weight + " + vesselWeightSpinner.getEditor().getText());
+        
+                  
     }
-    
-    
    
 }
 
