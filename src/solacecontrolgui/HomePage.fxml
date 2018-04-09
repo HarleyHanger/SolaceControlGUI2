@@ -82,7 +82,7 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </VBox.margin>
                               </Button>
-                              <Button fx:id="btn2" minHeight="40.0" minWidth="120.0" mnemonicParsing="false" text="Project Overview">
+                              <Button fx:id="btn2" minHeight="40.0" minWidth="120.0" mnemonicParsing="false" onAction="#TestBtn" text="Project Overview">
                                  <VBox.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </VBox.margin>

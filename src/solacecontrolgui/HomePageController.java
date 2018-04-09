@@ -70,6 +70,19 @@ public class HomePageController implements Initializable {
 
 }
 
+        @FXML
+    private void TestBtn(ActionEvent event) throws Exception{
+        // hides previous window
+        ((Node)(event.getSource())).getScene().getWindow().hide();
+        // sets up the stage
+        Parent parent = FXMLLoader.load(getClass().getResource("/solacecontrolgui/MappingTest.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(parent);
+        stage.setScene(scene);
+        stage.setTitle("Mission Control");
+        stage.show();
+
+}
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         

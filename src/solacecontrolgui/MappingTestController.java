@@ -7,7 +7,10 @@ package solacecontrolgui;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.Pane;
+
 
 /**
  * FXML Controller class
@@ -16,11 +19,13 @@ import javafx.fxml.Initializable;
  */
 public class MappingTestController implements Initializable {
 
-  
+  @FXML 
+private Pane pane1;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+    
     
 }

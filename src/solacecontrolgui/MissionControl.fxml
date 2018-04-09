@@ -9,7 +9,10 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -79,242 +82,269 @@
                      </BorderPane.margin>
                   </VBox>
                </top>
-               <center>
-                  <VBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
+               <left>
+                  <VBox BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets />
+                     </BorderPane.margin>
                      <children>
-                        <HBox alignment="CENTER">
+                        <GridPane>
+                           <columnConstraints>
+                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="248.22223917643225" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="384.4444274902344" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="384.4444274902344" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="384.4444274902344" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="384.4444274902344" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
                            <children>
-                              <Label text="Start Latitude: ">
+                              <Label fx:id="wayLatLabel2" text="Waypoint 2 Lat:" GridPane.rowIndex="2">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
-                                 <HBox.margin>
+                                 <opaqueInsets>
+                                    <Insets bottom="10.0" />
+                                 </opaqueInsets>
+                                 <GridPane.margin>
                                     <Insets right="10.0" />
-                                 </HBox.margin>
+                                 </GridPane.margin>
                               </Label>
-                              <Spinner fx:id="startLatSpinner" onMouseReleased="#saveConfig">
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Start Latitude:">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets right="10.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Spinner fx:id="startLatSpinner" onMouseReleased="#saveConfig" GridPane.columnIndex="1">
                                 <valueFactory>
                                     <SpinnerValueFactory.DoubleSpinnerValueFactory initialValue="0" max="90" min="-90" />
                                 </valueFactory>
                             </Spinner>
-                           </children>
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER">
-                           <children>
-                              <Label text="Start Longitude:">
+                              <Label text="Start Longitude:" GridPane.columnIndex="2">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
                                  <opaqueInsets>
                                     <Insets bottom="10.0" />
                                  </opaqueInsets>
                               </Label>
-                              <Spinner fx:id="startLonSpinner">
+                              <Spinner fx:id="startLonSpinner" GridPane.columnIndex="3">
                                   <valueFactory>
-                                    <SpinnerValueFactory.DoubleSpinnerValueFactory max="90" min="0" />
+                                    <SpinnerValueFactory.DoubleSpinnerValueFactory initialValue="0" max="180" min="-180" />
                                 </valueFactory>
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
                               </Spinner>
-                           </children>
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                           <opaqueInsets>
-                              <Insets bottom="10.0" />
-                           </opaqueInsets>
-                        </HBox>
-                        <HBox alignment="CENTER">
-                           <children>
-                              <Label text="End Latitude:">
+                              <Label text="Waypoint 1 Lat:" GridPane.rowIndex="1">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
-                                 <HBox.margin>
-                                    <Insets right="22.0" />
-                                 </HBox.margin>
                                  <opaqueInsets>
                                     <Insets bottom="10.0" />
                                  </opaqueInsets>
-                              </Label>
-                              <Spinner fx:id="endLatSpinner">
-                                  <valueFactory>
-                                    <SpinnerValueFactory.DoubleSpinnerValueFactory max="90" min="0" />
-                                </valueFactory>
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                              </Spinner>
-                           </children>
-                           <opaqueInsets>
-                              <Insets bottom="10.0" />
-                           </opaqueInsets>
-                           <padding>
-                              <Insets bottom="10.0" />
-                           </padding>
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER">
-                           <children>
-                              <Label text="End Longitude:">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <HBox.margin>
+                                 <GridPane.margin>
                                     <Insets right="10.0" />
-                                 </HBox.margin>
-                                 <opaqueInsets>
-                                    <Insets bottom="10.0" />
-                                 </opaqueInsets>
+                                 </GridPane.margin>
                               </Label>
-                              <Spinner fx:id="endLonSpinner">
+                              <Spinner fx:id="wayPointLat1" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                   <valueFactory>
-                                    <SpinnerValueFactory.DoubleSpinnerValueFactory max="90" min="0" />
+                                    <SpinnerValueFactory.DoubleSpinnerValueFactory initialValue="0" max="90" min="-90" />
                                 </valueFactory>
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
                               </Spinner>
-                           </children>
-                           <opaqueInsets>
-                              <Insets bottom="10.0" />
-                           </opaqueInsets>
-                           <padding>
-                              <Insets bottom="10.0" />
-                           </padding>
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER">
-                           <children>
-                              <Label text="Vessel Length:">
+                              <Label text="WayPoint 1 Long:" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
-                                 <HBox.margin>
-                                    <Insets right="14.0" />
-                                 </HBox.margin>
                                  <opaqueInsets>
                                     <Insets bottom="10.0" />
                                  </opaqueInsets>
                               </Label>
-                              <Spinner fx:id="vesselLengthSpinner">
-                                   <valueFactory>
-                                    <SpinnerValueFactory.DoubleSpinnerValueFactory max="1000" min="0" />
+                              <Spinner fx:id="wayPointLong1" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                  <valueFactory>
+                                    <SpinnerValueFactory.DoubleSpinnerValueFactory initialValue="0" max="180" min="-180" />
                                 </valueFactory>
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
                               </Spinner>
-                           </children>
-                           <opaqueInsets>
-                              <Insets bottom="10.0" />
-                           </opaqueInsets>
-                           <padding>
-                              <Insets bottom="10.0" />
-                           </padding>
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER">
-                           <children>
-                              <Label text="Vessel Weight:">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets right="10.0" />
-                                 </HBox.margin>
-                                 <opaqueInsets>
-                                    <Insets bottom="10.0" />
-                                 </opaqueInsets>
-                              </Label>
-                              <Spinner fx:id="vesselWeightSpinner">
+                              <Spinner fx:id="wayPointLong2" GridPane.columnIndex="3" GridPane.rowIndex="2">
                               <valueFactory>
-                                    <SpinnerValueFactory.DoubleSpinnerValueFactory max="1000" min="0" />
+                                    <SpinnerValueFactory.DoubleSpinnerValueFactory initialValue="0" max="90" min="-90" />
                                 </valueFactory>
                               </Spinner>
+                              <Spinner fx:id="wayPointLat2" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                   <valueFactory>
+                                    <SpinnerValueFactory.DoubleSpinnerValueFactory initialValue="0" max="180" min="-180" />
+                                </valueFactory>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </Spinner>
+                              <Spinner fx:id="wayPointLat3" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                 <valueFactory>
+                                    <SpinnerValueFactory.DoubleSpinnerValueFactory initialValue="0" max="90" min="-90" />
+                                 </valueFactory>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </Spinner>
+                              <Spinner fx:id="wayPointLat4" layoutX="160.0" layoutY="137.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                 <valueFactory>
+                                    <SpinnerValueFactory.DoubleSpinnerValueFactory initialValue="0" max="90" min="-90" />
+                                 </valueFactory>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </Spinner>
+                              <Label fx:id="wayLatLabel3" text="Waypoint 3 Lat:" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <opaqueInsets>
+                                    <Insets bottom="10.0" />
+                                 </opaqueInsets>
+                                 <GridPane.margin>
+                                    <Insets right="10.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label fx:id="wayLatLabel4" text="Waypoint 4 Lat:" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <opaqueInsets>
+                                    <Insets bottom="10.0" />
+                                 </opaqueInsets>
+                                 <GridPane.margin>
+                                    <Insets right="10.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label fx:id="wayLongLabel3" text="Waypoint3 Long:" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <opaqueInsets>
+                                    <Insets bottom="10.0" />
+                                 </opaqueInsets>
+                              </Label>
+                              <Label fx:id="wayLongLabel4" text="Waypoint4 Long:" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <opaqueInsets>
+                                    <Insets bottom="10.0" />
+                                 </opaqueInsets>
+                              </Label>
+                              <Label fx:id="wayLongLabel2" text="Waypoint2 Long:" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <opaqueInsets>
+                                    <Insets bottom="10.0" />
+                                 </opaqueInsets>
+                              </Label>
+                              <Spinner fx:id="wayPointLong3" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                                 <valueFactory>
+                                    <SpinnerValueFactory.DoubleSpinnerValueFactory initialValue="0" max="180" min="-180" />
+                                 </valueFactory>
+                              </Spinner>
+                              <Spinner fx:id="wayPointLong4" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                                 <valueFactory>
+                                    <SpinnerValueFactory.DoubleSpinnerValueFactory initialValue="0" max="180" min="-180" />
+                                 </valueFactory>
+                              </Spinner>
+                              <Label fx:id="wayLatLabel41" text="End Latitude:" GridPane.rowIndex="5">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <opaqueInsets>
+                                    <Insets bottom="10.0" />
+                                 </opaqueInsets>
+                              </Label>
+                              <Spinner fx:id="endLatitude" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                 <valueFactory>
+                                    <SpinnerValueFactory.DoubleSpinnerValueFactory initialValue="0" max="90" min="-90" />
+                                 </valueFactory>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </Spinner>
+                              <Label fx:id="wayLongLabel41" text="End Longitude:" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <opaqueInsets>
+                                    <Insets bottom="10.0" />
+                                 </opaqueInsets>
+                              </Label>
+                              <Spinner fx:id="endLongitude" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                                 <valueFactory>
+                                    <SpinnerValueFactory.DoubleSpinnerValueFactory initialValue="0" max="180" min="-180" />
+                                 </valueFactory>
+                              </Spinner>
+                              <Button mnemonicParsing="false" onAction="#setEndValue" prefHeight="25.0" prefWidth="95.0" text="Set Value" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                                 <GridPane.margin>
+                                    <Insets left="3.0" />
+                                 </GridPane.margin>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#way1Disable" prefHeight="25.0" prefWidth="95.0" text="Toggle on/off" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#way2Disable" prefHeight="25.0" prefWidth="95.0" text="Toggle on/off" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                              <Button mnemonicParsing="false" onAction="#way3Disable" prefHeight="25.0" prefWidth="95.0" text="Toggle on/off" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                              <Button mnemonicParsing="false" onAction="#way4Disable" prefHeight="25.0" prefWidth="95.0" text="Toggle on/off" GridPane.columnIndex="4" GridPane.rowIndex="4" />
                            </children>
-                           <opaqueInsets>
-                              <Insets bottom="10.0" />
-                           </opaqueInsets>
-                           <padding>
-                              <Insets bottom="10.0" />
-                           </padding>
-                           <VBox.margin>
-                              <Insets bottom="40.0" top="20.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <VBox>
+                        </GridPane>
+                        <VBox alignment="CENTER">
                            <children>
                               <HBox alignment="CENTER">
                                  <children>
                                     <Button mnemonicParsing="false" onAction="#loadConfig" text="Load Configuration">
-                                       <HBox.margin>
-                                          <Insets right="20.0" top="10.0" />
-                                       </HBox.margin>
                                        <font>
                                           <Font size="16.0" />
                                        </font>
+                                       <HBox.margin>
+                                          <Insets bottom="10.0" right="5.0" />
+                                       </HBox.margin>
                                     </Button>
                                     <Button mnemonicParsing="false" onAction="#saveConfig" text="Save Configuration">
-                                       <HBox.margin>
-                                          <Insets top="10.0" />
-                                       </HBox.margin>
                                        <font>
                                           <Font size="16.0" />
                                        </font>
+                                       <HBox.margin>
+                                          <Insets bottom="10.0" left="5.0" />
+                                       </HBox.margin>
                                     </Button>
                                  </children>
-                                 <opaqueInsets>
-                                    <Insets bottom="10.0" />
-                                 </opaqueInsets>
-                                 <padding>
-                                    <Insets bottom="10.0" />
-                                 </padding>
                               </HBox>
-                              <HBox alignment="CENTER">
-                                 <children>
-                                    <Label fx:id="fileLoadedName" text="File Loaded" textAlignment="CENTER" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                        <HBox alignment="CENTER">
-                           <children>
                               <Button mnemonicParsing="false" onAction="#runConfig" text="Run Configuration">
-                                 <HBox.margin>
-                                    <Insets top="10.0" />
-                                 </HBox.margin>
                                  <font>
                                     <Font size="16.0" />
                                  </font>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
                               </Button>
+                              <Label fx:id="fileLoadedName" text="File Loaded" textAlignment="CENTER" />
                            </children>
-                           <opaqueInsets>
-                              <Insets bottom="10.0" />
-                           </opaqueInsets>
-                           <padding>
-                              <Insets bottom="10.0" />
-                           </padding>
-                        </HBox>
+                        </VBox>
                      </children>
-                     <BorderPane.margin>
-                        <Insets />
-                     </BorderPane.margin>
                   </VBox>
-               </center>
+               </left>
             </BorderPane>
          </center>
       </BorderPane>
