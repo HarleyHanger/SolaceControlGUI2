@@ -8,12 +8,10 @@ package solacecontrolgui;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

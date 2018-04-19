@@ -11,94 +11,87 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="solacecontrolgui.HomePageController">
+<AnchorPane id="AnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="solacecontrolgui.HomePageController">
    <children>
-      <AnchorPane fx:id="bg" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <BorderPane prefHeight="768.0" prefWidth="1024.0">
-               <top>
-                  <VBox fx:id="headerBar" alignment="CENTER" style="-fx-background-color: #ff0000;" BorderPane.alignment="CENTER">
+      <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+         <top>
+            <VBox fx:id="headerBar" alignment="CENTER" style="-fx-background-color: #686868;" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER_LEFT">
                      <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="41.0" prefWidth="1024.0" style="-fx-background-color: #686868;" VBox.vgrow="ALWAYS">
-                           <children>
-                              <ImageView fx:id="homeBtn" fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/Home-Button.png" />
-                                 </image>
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </HBox.margin>
-                              </ImageView>
-                              <Label fx:id="timer" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="43.0" prefWidth="4000.0" text="23:00" textAlignment="RIGHT" textFill="WHITE">
-                                 <HBox.margin>
-                                    <Insets right="30.0" />
-                                 </HBox.margin>
-                                 <font>
-                                    <Font size="29.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-               </top>
-               <bottom>
-                  <HBox alignment="BOTTOM_LEFT" prefHeight="41.0" prefWidth="1024.0" style="-fx-background-color: #686868;" BorderPane.alignment="CENTER">
-                     <children>
-                        <Label fx:id="breadcrumb" text="Homepage" textFill="WHITE">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
+                        <ImageView fx:id="homeBtn" fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/Home-Button.png" />
+                           </image>
                            <HBox.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </HBox.margin>
+                        </ImageView>
+                        <Label fx:id="timer" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="43.0" prefWidth="617.0" text="23:00" textAlignment="RIGHT" textFill="WHITE">
+                           <font>
+                              <Font size="29.0" />
+                           </font>
                         </Label>
                      </children>
                   </HBox>
-               </bottom>
+               </children>
+            </VBox>
+         </top>
+         <bottom>
+            <HBox alignment="BOTTOM_LEFT" prefHeight="41.0" prefWidth="1024.0" style="-fx-background-color: #686868;" BorderPane.alignment="CENTER">
+               <children>
+                  <Label fx:id="breadcrumb" text="Homepage" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+         </bottom>
+         <center>
+            <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <top>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <Label text="Control System Homepage" textAlignment="CENTER">
+                           <font>
+                              <Font name="System Bold" size="46.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="300.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/sailboat.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </VBox>
+               </top>
                <center>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                     <top>
-                        <VBox alignment="CENTER">
-                           <children>
-                              <Label text="Solace Control System Homepage" textAlignment="CENTER">
-                                 <font>
-                                    <Font name="System Bold" size="46.0" />
-                                 </font>
-                              </Label>
-                              <ImageView fitHeight="300.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/sailboat.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                        </VBox>
-                     </top>
-                     <center>
-                        <VBox alignment="CENTER" BorderPane.alignment="CENTER">
-                           <children>
-                              <Button fx:id="btn1" minHeight="40.0" minWidth="120.0" mnemonicParsing="false" onAction="#missionControlBtn" text="Mission Control">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </VBox.margin>
-                              </Button>
-                              <Button fx:id="btn2" minHeight="40.0" minWidth="120.0" mnemonicParsing="false" onAction="#TestBtn" text="Project Overview">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </VBox.margin>
-                              </Button>
-                              <Button fx:id="btn3" minHeight="40.0" minWidth="120.0" mnemonicParsing="false" text="Data Analysis">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </VBox.margin>
-                              </Button>
-                           </children>
-                        </VBox>
-                     </center>
-                  </BorderPane>
+                  <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button fx:id="btn1" minHeight="40.0" minWidth="120.0" mnemonicParsing="false" onAction="#missionControlBtn" text="Mission Planning and Control">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button fx:id="btn2" minHeight="40.0" minWidth="120.0" mnemonicParsing="false" onAction="#TestBtn" text="User Guide">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button fx:id="btn3" minHeight="40.0" minWidth="120.0" mnemonicParsing="false" text="About">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
                </center>
             </BorderPane>
-         </children>
-      </AnchorPane>
+         </center>
+      </BorderPane>
    </children>
 </AnchorPane>

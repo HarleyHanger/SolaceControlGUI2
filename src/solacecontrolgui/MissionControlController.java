@@ -97,6 +97,9 @@ public class MissionControlController implements Initializable {
     private AnchorPane bg;
     @FXML
     private VBox headerBar;
+    
+    private ArrayList<String> waypointsLat = new ArrayList<String>();
+    private ArrayList<String> waypointsLong = new ArrayList<String>();
 
  
     
@@ -133,8 +136,7 @@ public class MissionControlController implements Initializable {
         wayPointLat4.getEditor().setText("");
         wayPointLong4.getEditor().setText("");
         endLatitude.getEditor().setText("");
-        endLongitude.getEditor().setText("");
-        
+        endLongitude.getEditor().setText("");        
         
         
 
@@ -485,36 +487,109 @@ public class MissionControlController implements Initializable {
                 }
         // if there are no errors then send the values.
         else{
+            // Clear the arrays
+            waypointsLat.clear();
+            waypointsLong.clear();
+             
+              //String postStatement = ("waypoints POST \n" +"                    { \n" + "                        \"waypoints\": [");
+            
+                String startLatPost = startLatSpinner.getEditor().getText();
+                waypointsLat.add(startLatPost);
+                String startLongPost = startLonSpinner.getEditor().getText();
+                waypointsLong.add(startLongPost);
+                System.out.println(" Start Lon + " + startLonSpinner.getEditor().getText());
+                
                 System.out.println(" Start lat + " + startLatSpinner.getEditor().getText());
                 System.out.println(" Start Lon + " + startLonSpinner.getEditor().getText());
                 // the following if statements check to see if the waypoints are active or not.
                 // waypoint 1
                 if(way1 == 1){
+                     String way1LatPost = wayPointLat1.getEditor().getText();
+                     waypointsLat.add(way1LatPost);
+                     String way1LongPost = wayPointLong1.getEditor().getText();
+                     waypointsLong.add(way1LongPost);
                     System.out.println(" WayPoint 1 + " + wayPointLat1.getEditor().getText());
                     System.out.println(" Waypoint 1 + " + wayPointLong1.getEditor().getText());
+                    
+                   
                 }
                 // waypoint 2
                 if(way2 == 1){
+                    
+                    
+                    String way2LatPost = wayPointLat2.getEditor().getText();
+                    waypointsLat.add(way2LatPost);
+                    String way2LongPost = wayPointLong2.getEditor().getText();
+                    waypointsLong.add(way2LongPost);
                     System.out.println(" Waypoint 2  + " + wayPointLat2.getEditor().getText());
                     System.out.println(" Waypoint 2  + " + wayPointLong2.getEditor().getText());
                 }
                 // waypoint 3
                 if(way3 == 1){
+                    
+                    String way3LatPost = wayPointLat3.getEditor().getText();
+                    waypointsLat.add(way3LatPost);
+                    String way3LongPost = wayPointLong3.getEditor().getText();
+                    waypointsLong.add(way3LongPost);
+                    
                     System.out.println(" Waypoint 3  + " + wayPointLat3.getEditor().getText());
                     System.out.println(" Waypoint 3  + " + wayPointLong3.getEditor().getText());    
                 }
                 // waypoint 4
                 if(way4 == 1){
+                    
+                    String way4LatPost = wayPointLat4.getEditor().getText();
+                    waypointsLat.add(way4LatPost);
+                    String way4LongPost = wayPointLong4.getEditor().getText();
+                    waypointsLong.add(way4LongPost);
                     System.out.println(" Waypoint 4  + " + wayPointLat4.getEditor().getText());
                     System.out.println(" Waypoint 4  + " + wayPointLong4.getEditor().getText());    
                 }
+                
+                String endLatPost = endLatitude.getEditor().getText();
+                waypointsLat.add(endLatPost);
+                String endLongPost = endLongitude.getEditor().getText();
+                waypointsLong.add(endLongPost);
+                
                 System.out.println(" End Lat  + " + endLatitude.getEditor().getText());
                 System.out.println(" End Long  + " + endLongitude.getEditor().getText());
+                
+                // PRINT OUT JSON 
+                System.out.println("waypoints POST \n" +"                    { \n" +"                        \"waypoints\": [");
+                for (int i = 0; i < waypointsLat.size(); i++)
+                    System.out.println("                        [" + waypointsLat.get(i) + "," + waypointsLong.get(i) + "]");
+                System.out.println("                        ] \n "+ "                    }" );
+                   
+                // JSON PRINT out looks like below 
+                
+                 /* waypoints POST 
+                    { 
+                        "waypoints": [
+                        [startLatPost , startLongPost],
+                        [way1LatPost , way1LongPost],
+                        [way2LatPost , way2LongPost],
+                        [way3LatPost , way3LongPost],
+                        [way4LatPost , way4LongPost],
+                        [end , way4LongPost]
+                    */
             }
 
         
                   
     }
+    @FXML
+     private void HomeBtn(ActionEvent event) throws Exception{
+        // hides previous window
+        ((Node)(event.getSource())).getScene().getWindow().hide();
+        // sets up the stage
+        Parent parent = FXMLLoader.load(getClass().getResource("/solacecontrolgui/HomePage.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(parent);
+        stage.setScene(scene);
+        stage.setTitle("Mission Control");
+        stage.show();
+
+}
    
 }
 
