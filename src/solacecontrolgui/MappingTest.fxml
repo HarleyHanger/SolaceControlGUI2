@@ -1,25 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.embed.swing.SwingNode?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="solacecontrolgui.MappingTestController">
+<AnchorPane id="AnchorPane" fx:id="ap" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="solacecontrolgui.MappingTestController">
    <children>
-      <Button layoutX="343.0" layoutY="178.0" mnemonicParsing="false" onAction="#retriveData" text="Retive Data" />
-      <Label layoutX="91.0" layoutY="41.0" text="Active?" />
-      <Label layoutX="86.0" layoutY="102.0" text="Wind Speed" />
-      <Label layoutX="70.0" layoutY="137.0" text="Wind Apparent" />
-      <Label layoutX="62.0" layoutY="169.0" text="Absolute wind" />
-      <Label layoutX="63.0" layoutY="210.0" text="Heading" />
-      <Label layoutX="57.0" layoutY="255.0" text="Position" />
-      <TextField fx:id="windSpeed" layoutX="159.0" layoutY="98.0" />
-      <TextField fx:id="windApparent" layoutX="159.0" layoutY="133.0" />
-      <TextField fx:id="windAbsolute" layoutX="159.0" layoutY="165.0" />
-      <TextField fx:id="heading" layoutX="159.0" layoutY="206.0" />
-      <TextField fx:id="position" layoutX="159.0" layoutY="251.0" />
-      <TextField fx:id="active" layoutX="159.0" layoutY="37.0" />
-      <Label fx:id="arrayHere" layoutX="406.0" layoutY="54.0" text="Array here" />
+      <BorderPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <left>
+            <GridPane prefHeight="583.0" prefWidth="0.0" BorderPane.alignment="CENTER">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <TextField fx:id="windSpeed" prefHeight="25.0" prefWidth="189.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="windApparent" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="windAbsolute" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="heading" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <VBox GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <children>
+                        <HBox>
+                           <children>
+                              <Label text="Lat" />
+                              <TextField fx:id="positionLat" />
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label text="Long" />
+                              <TextField fx:id="positionLon" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <TextField fx:id="active" GridPane.columnIndex="1" />
+                  <Label text="Active?" />
+                  <Label text="Wind Speed" GridPane.rowIndex="1" />
+                  <Label text="Wind Apparent" GridPane.rowIndex="2" />
+                  <Label text="Absolute wind" GridPane.rowIndex="3" />
+                  <Label text="Heading" GridPane.rowIndex="4" />
+                  <Label text="Position" GridPane.rowIndex="5" />
+                  <Button mnemonicParsing="false" onAction="#retriveData" text="Retive Data" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+               </children>
+            </GridPane>
+         </left>
+         <right>
+            <BorderPane prefHeight="583.0" prefWidth="2265.0" BorderPane.alignment="CENTER">
+               <center>
+                  <SwingNode fx:id="swingNode" />
+               </center>
+            </BorderPane>
+         </right>
+         <bottom>
+            <Label fx:id="arrayHere" text="Array here" BorderPane.alignment="CENTER_LEFT" />
+         </bottom>
+      </BorderPane>
    </children>
 </AnchorPane>

@@ -5,17 +5,24 @@
  */
 package solacecontrolgui;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Formatter;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.embed.swing.SwingNode;
@@ -31,6 +38,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -41,11 +49,25 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import static javax.imageio.ImageIO.getCacheDirectory;
+import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import javax.swing.event.MouseInputListener;
+import org.json.JSONException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.jxmapviewer.JXMapViewer;
+import org.jxmapviewer.OSMTileFactoryInfo;
+import org.jxmapviewer.cache.FileBasedLocalCache;
+import org.jxmapviewer.input.CenterMapListener;
+import org.jxmapviewer.input.PanKeyListener;
+import org.jxmapviewer.input.PanMouseInputListener;
+import org.jxmapviewer.input.ZoomMouseWheelListenerCenter;
+import org.jxmapviewer.viewer.DefaultTileFactory;
+import org.jxmapviewer.viewer.GeoPosition;
+import org.jxmapviewer.viewer.TileFactoryInfo;
+import org.jxmapviewer.viewer.WaypointPainter;
 
 /**
  *
@@ -55,27 +77,19 @@ public class MissionControlController implements Initializable {
     
    
     String fileToLoad;    
-    //Home Page 
     
- 
-   
+    //Mission Setup
+    
     @FXML
     private Label fileLoadedName;
    
-   // start Latitude Spinner Degree
+   // start Latitude & longitude Spinner Degree
     @FXML
-    private Spinner<Double> startLatSpinner;
+    private Spinner<Double> startLatSpinner , startLonSpinner;
     
-    // start Longitude Spinner Degree
+     // Latitude spinners
     @FXML
-    private Spinner<Double> startLonSpinner;
-    
-
-    
-
-    // Latitude spinners
-    @FXML
-   private Spinner<Double> wayPointLat1, wayPointLat2, wayPointLat3 , wayPointLat4, endLatitude ; 
+    private Spinner<Double> wayPointLat1, wayPointLat2, wayPointLat3 , wayPointLat4, endLatitude ; 
     // longitude spinners
     @FXML
     private Spinner<Double> wayPointLong1, wayPointLong2, wayPointLong3 , wayPointLong4 , endLongitude ; 
@@ -93,17 +107,33 @@ public class MissionControlController implements Initializable {
     
     FileChooser fc = new FileChooser();
     JSONParser parser = new JSONParser();
-    @FXML
-    private AnchorPane bg;
+    
     @FXML
     private VBox headerBar;
     
     private ArrayList<String> waypointsLat = new ArrayList<String>();
     private ArrayList<String> waypointsLong = new ArrayList<String>();
-
- 
     
     private int way1 = 1, way2 = 1, way3 = 1 , way4 = 1;
+    
+    // Mission Control Page
+        
+    @FXML
+    private TextField active, windSpeed, windApparent, windAbsolute, heading , positionLat, positionLon;
+    
+    @FXML
+    private Label arrayHere;
+    
+    //  allows the map to be added
+    JXMapViewer mapViewer = new JXMapViewer();
+    
+    
+   @FXML 
+   private SwingNode swingNode;
+   
+   
+   
+
       
     
     @Override
@@ -137,6 +167,66 @@ public class MissionControlController implements Initializable {
         wayPointLong4.getEditor().setText("");
         endLatitude.getEditor().setText("");
         endLongitude.getEditor().setText("");        
+        
+        // Mapsetup
+        
+            // Create a TileFactoryInfo for OSM
+        TileFactoryInfo info = new OSMTileFactoryInfo();
+        DefaultTileFactory tileFactory = new DefaultTileFactory(info);
+        tileFactory.setThreadPoolSize(8);
+
+        // Setup local file cache
+        File cacheDir = new File(System.getProperty("user.home") + File.separator + ".jxmapviewer2");
+        tileFactory.setLocalCache(new FileBasedLocalCache(cacheDir, false));
+
+        // Setup JXMapViewer
+        
+        mapViewer.setTileFactory(tileFactory);
+
+        // lat , lat , lat , long , long , long
+        GeoPosition frankfurt = new GeoPosition(50,  7, 0, 8, 41, 0);
+        GeoPosition wiesbaden = new GeoPosition(50,  5, 0, 8, 14, 0);
+        GeoPosition mainz     = new GeoPosition(50,  0, 0, 8, 16, 0);
+        GeoPosition darmstadt = new GeoPosition(49, 52, 0, 8, 39, 0);
+        GeoPosition offenbach = new GeoPosition(50,  6, 0, 8, 46, 0);
+        
+        GeoPosition isleOfWight = new GeoPosition(50,  40, 0, -1, -25, 0);
+        
+
+        // Set the focus
+        mapViewer.setZoom(10);
+        mapViewer.setAddressLocation(isleOfWight);
+
+        // Add interactions
+        MouseInputListener mia = new PanMouseInputListener(mapViewer);
+        mapViewer.addMouseListener(mia);
+        mapViewer.addMouseMotionListener(mia);
+        mapViewer.addMouseListener(new CenterMapListener(mapViewer));
+        mapViewer.addMouseWheelListener(new ZoomMouseWheelListenerCenter(mapViewer));
+        mapViewer.addKeyListener(new PanKeyListener(mapViewer));
+
+        // Create waypoints from the geo-positions
+        Set<SwingWaypoint> waypoints = new HashSet<SwingWaypoint>(Arrays.asList(
+                new SwingWaypoint("Frankfurt", frankfurt),
+                new SwingWaypoint("Wiesbaden", wiesbaden),
+                new SwingWaypoint("Mainz", mainz),
+                new SwingWaypoint("Darmstadt", darmstadt),
+                new SwingWaypoint("Offenbach", offenbach)));
+
+        // Set the overlay painter
+        WaypointPainter<SwingWaypoint> swingWaypointPainter = new SwingWaypointOverlayPainter();
+        swingWaypointPainter.setWaypoints(waypoints);
+        mapViewer.setOverlayPainter(swingWaypointPainter);
+
+        // Add the JButtons to the map viewer
+        for (SwingWaypoint w : waypoints) {
+            mapViewer.add(w.getButton());
+        }
+
+    
+
+        
+        createAndSetSwingMap(swingNode);
         
         
 
@@ -272,6 +362,7 @@ public class MissionControlController implements Initializable {
         else {
              fileLoadedName.setText("file was not selected or is invalid");
         }
+ 
         
     }
   
@@ -576,6 +667,118 @@ public class MissionControlController implements Initializable {
 
         
                   
+    }
+     @FXML
+    private void retriveData (ActionEvent ae) throws JSONException {
+        System.out.println("Searched");
+        
+        try {         
+            URL boatD = new URL("http://52.232.121.121:3333/boat"); // URL to Parse
+            URLConnection yc = boatD.openConnection();
+            BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
+            
+            String inputLine;
+            while ((inputLine = in.readLine()) != null) {    
+                System.out.println("in" + in);
+                System.out.println("il" + inputLine);
+                //arrayHere.setText(inputLine);
+                
+                org.json.JSONArray jsonarray = new org.json.JSONArray("[" +inputLine + "]");   
+                for (int i = 0; i < jsonarray.length(); i++){
+                    org.json.JSONObject obj = jsonarray.getJSONObject(i);
+                    
+                    String activeOutput = obj.getString("active");
+                    String speedOutput = obj.getString("wind");
+                    String[] wind = speedOutput.split(":");
+                    String speed = wind[2]; 
+                    String apparent = wind[3];
+                    String absolute = wind[1];
+                     
+                   // String aparentOutput = obj.getString("apparent");
+                    //String absoluteOutput = obj.getString("absolute");
+                    String headingOutput = obj.getString("heading");
+                    String positionOutput = obj.getString("position");
+                    String[] position = positionOutput.split(",");
+                    String lat = position[0]; 
+                    String lon = position[1];
+                    
+                    
+                    //System.out.println(activeOutput);
+                   // System.out.println(speedOutput);
+                   // System.out.println(aparentOutput);
+                   // System.out.println(absoluteOutput);
+                    System.out.println("speed" + speedOutput);
+                    
+                    
+                    System.out.println("lat" + lat + "long"+ lon);
+                   
+                    
+                    
+                    
+                    
+                      
+                // Replace Chars from latitude and longitude
+               lat = lat.replace("[", "");  lon = lon.replace("]", "");
+               // Remove Extras charecters from the speed
+               speed = speed.replace("apparent", ""); speed = speed.replace(",", ""); speed = speed.replace("\"", "");
+               // Remove from apparent
+               apparent = apparent.replace ("}","");
+               // Remove from absolute
+               absolute = absolute.replace (",",""); absolute = absolute.replace ("speed",""); absolute = absolute.replace ("\"",""); 
+               
+                                
+               // active.setText(activeOutput);
+                windSpeed.setText(speed);
+                windApparent.setText(apparent);
+                windAbsolute.setText(absolute);
+                heading.setText(headingOutput);
+                positionLat.setText(lat);
+                positionLon.setText(lon);
+                //active.setText(activeOutput);
+                
+
+                
+                    
+                }
+               /*
+                JSONParser parser = new JSONParser();
+                Object obj  = parser.parse(inputLine);
+                JSONArray array = new JSONArray();
+                array.add(obj);
+                for( int i = 0 < array.length(); i++){
+                    JSONObject jsonobject = array.getJSONObject(i);
+                
+                }
+*/
+                
+              
+                
+
+    }
+ }     catch (MalformedURLException ex) {
+           Logger.getLogger(MappingTestController.class.getName()).log(Level.SEVERE, null, ex);
+           
+           System.out.println("hi");
+       } catch (IOException ex) {
+           Logger.getLogger(MappingTestController.class.getName()).log(Level.SEVERE, null, ex);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("An Exception has be cought");
+                    String s ="Is the BoatD Server Running?";
+                    alert.setContentText(s);
+                    alert.show();
+                    // Make an error get saved here 
+          
+       }
+    }
+    
+       public void createAndSetSwingMap(final SwingNode swingNode) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                swingNode.setContent(mapViewer);
+            }
+        });
     }
     @FXML
      private void HomeBtn(ActionEvent event) throws Exception{

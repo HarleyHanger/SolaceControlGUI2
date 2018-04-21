@@ -11,29 +11,28 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="solacecontrolgui.HomePageController">
+<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="solacecontrolgui.HomePageController">
    <children>
-      <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+      <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
             <VBox fx:id="headerBar" alignment="CENTER" style="-fx-background-color: #686868;" BorderPane.alignment="CENTER">
                <children>
-                  <HBox alignment="CENTER_LEFT">
-                     <children>
-                        <ImageView fx:id="homeBtn" fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                  <BorderPane prefHeight="0.0" prefWidth="1024.0">
+                     <left>
+                        <ImageView fx:id="homeBtn" fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                            <image>
                               <Image url="@images/Home-Button.png" />
                            </image>
-                           <HBox.margin>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </HBox.margin>
                         </ImageView>
-                        <Label fx:id="timer" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="43.0" prefWidth="617.0" text="23:00" textAlignment="RIGHT" textFill="WHITE">
+                     </left>
+                     <right>
+                        <Label fx:id="timer" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="43.0" prefWidth="947.0" text="23:00" textAlignment="RIGHT" textFill="WHITE" BorderPane.alignment="CENTER">
                            <font>
                               <Font size="29.0" />
                            </font>
                         </Label>
-                     </children>
-                  </HBox>
+                     </right>
+                  </BorderPane>
                </children>
             </VBox>
          </top>
@@ -54,7 +53,7 @@
          <center>
             <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <top>
-                  <VBox alignment="CENTER">
+                  <VBox alignment="CENTER" prefHeight="368.0" prefWidth="1027.0">
                      <children>
                         <Label text="Control System Homepage" textAlignment="CENTER">
                            <font>

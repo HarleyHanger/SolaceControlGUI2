@@ -23,7 +23,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
@@ -61,6 +63,10 @@ public class HomePageController implements Initializable {
         // sets up the stage
         Parent parent = FXMLLoader.load(getClass().getResource("/solacecontrolgui/MissionControl.fxml"));
         Stage stage = new Stage();
+        stage.setMaximized(true);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        //stage.initStyle(StageStyle.UNDECORATED);
+        
         Scene scene = new Scene(parent);
         stage.setScene(scene);
         stage.setTitle("Mission Control");
@@ -75,7 +81,9 @@ public class HomePageController implements Initializable {
         // sets up the stage
         Parent parent = FXMLLoader.load(getClass().getResource("/solacecontrolgui/MappingTest.fxml"));
         Stage stage = new Stage();
+        stage.setMaximized(true);
         Scene scene = new Scene(parent);
+        
         stage.setScene(scene);
         stage.setTitle("Mission Control");
         stage.show();
@@ -83,8 +91,8 @@ public class HomePageController implements Initializable {
 }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        
-      DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd - HH:mm:ss");
+       
+    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
     //get current date time with Date()
     Date date = new Date();
     System.out.println(dateFormat.format(date));
