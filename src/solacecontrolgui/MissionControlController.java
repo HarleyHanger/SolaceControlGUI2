@@ -5,6 +5,12 @@
  */
 package solacecontrolgui;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -50,6 +56,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import static javax.imageio.ImageIO.getCacheDirectory;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputListener;
 import org.json.JSONException;
@@ -64,10 +71,16 @@ import org.jxmapviewer.input.CenterMapListener;
 import org.jxmapviewer.input.PanKeyListener;
 import org.jxmapviewer.input.PanMouseInputListener;
 import org.jxmapviewer.input.ZoomMouseWheelListenerCenter;
+import org.jxmapviewer.input.ZoomMouseWheelListenerCursor;
+import org.jxmapviewer.painter.CompoundPainter;
+import org.jxmapviewer.painter.Painter;
 import org.jxmapviewer.viewer.DefaultTileFactory;
+import org.jxmapviewer.viewer.DefaultWaypoint;
 import org.jxmapviewer.viewer.GeoPosition;
 import org.jxmapviewer.viewer.TileFactoryInfo;
+import org.jxmapviewer.viewer.Waypoint;
 import org.jxmapviewer.viewer.WaypointPainter;
+import static solacecontrolgui.Sample3.updateWindowTitle;
 
 /**
  *
@@ -121,24 +134,38 @@ public class MissionControlController implements Initializable {
     @FXML
     private TextField active, windSpeed, windApparent, windAbsolute, heading , positionLat, positionLon;
     
+    
+    // Map Stuff
     @FXML
     private Label arrayHere;
     
     //  allows the map to be added
     JXMapViewer mapViewer = new JXMapViewer();
-    
-    
+        
    @FXML 
    private SwingNode swingNode;
    
+   @FXML 
+   private Label latLong;
    
+           double lati ;
+        double longi ;
+        int zoom;
    
+        String lati2;
+        String longi2;
+        String zoom2;
+   
+   List<Double> wayPointsLatMap = new ArrayList<>(Arrays.asList());
+   List<Double> wayPointsLonMap = new ArrayList<>(Arrays.asList());
 
       
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        System.out.println( "Start UP LAT " + wayPointsLatMap);
+        System.out.println( "Start UP Lon " + wayPointsLonMap);
         // Make spinner manually editable
         startLatSpinner.setEditable(true);
         startLatSpinner.setEditable(true);
@@ -170,10 +197,9 @@ public class MissionControlController implements Initializable {
         
         // Mapsetup
         
-            // Create a TileFactoryInfo for OSM
+// Create a TileFactoryInfo for OpenStreetMap
         TileFactoryInfo info = new OSMTileFactoryInfo();
         DefaultTileFactory tileFactory = new DefaultTileFactory(info);
-        tileFactory.setThreadPoolSize(8);
 
         // Setup local file cache
         File cacheDir = new File(System.getProperty("user.home") + File.separator + ".jxmapviewer2");
@@ -182,48 +208,107 @@ public class MissionControlController implements Initializable {
         // Setup JXMapViewer
         
         mapViewer.setTileFactory(tileFactory);
-
-        // lat , lat , lat , long , long , long
-        GeoPosition frankfurt = new GeoPosition(50,  7, 0, 8, 41, 0);
-        GeoPosition wiesbaden = new GeoPosition(50,  5, 0, 8, 14, 0);
-        GeoPosition mainz     = new GeoPosition(50,  0, 0, 8, 16, 0);
-        GeoPosition darmstadt = new GeoPosition(49, 52, 0, 8, 39, 0);
-        GeoPosition offenbach = new GeoPosition(50,  6, 0, 8, 46, 0);
-        
-        GeoPosition isleOfWight = new GeoPosition(50,  40, 0, -1, -25, 0);
-        
-
+        GeoPosition isleOfWight = new GeoPosition(50.11, -1.30);
+        JLabel latLongLabel = new JLabel ("Lat long here");
         // Set the focus
-        mapViewer.setZoom(10);
+        mapViewer.setZoom(7);
         mapViewer.setAddressLocation(isleOfWight);
-
+        
         // Add interactions
         MouseInputListener mia = new PanMouseInputListener(mapViewer);
         mapViewer.addMouseListener(mia);
         mapViewer.addMouseMotionListener(mia);
         mapViewer.addMouseListener(new CenterMapListener(mapViewer));
-        mapViewer.addMouseWheelListener(new ZoomMouseWheelListenerCenter(mapViewer));
+        mapViewer.addMouseWheelListener(new ZoomMouseWheelListenerCursor(mapViewer));
         mapViewer.addKeyListener(new PanKeyListener(mapViewer));
 
-        // Create waypoints from the geo-positions
-        Set<SwingWaypoint> waypoints = new HashSet<SwingWaypoint>(Arrays.asList(
-                new SwingWaypoint("Frankfurt", frankfurt),
-                new SwingWaypoint("Wiesbaden", wiesbaden),
-                new SwingWaypoint("Mainz", mainz),
-                new SwingWaypoint("Darmstadt", darmstadt),
-                new SwingWaypoint("Offenbach", offenbach)));
+        // Add a selection painter
+        SelectionAdapter sa = new SelectionAdapter(mapViewer);
+        SelectionPainter sp = new SelectionPainter(sa);
+        mapViewer.addMouseListener(sa);
+        mapViewer.add(latLongLabel);
+        mapViewer.addMouseMotionListener(sa);
+        mapViewer.setOverlayPainter(sp);
 
-        // Set the overlay painter
-        WaypointPainter<SwingWaypoint> swingWaypointPainter = new SwingWaypointOverlayPainter();
-        swingWaypointPainter.setWaypoints(waypoints);
-        mapViewer.setOverlayPainter(swingWaypointPainter);
-
-        // Add the JButtons to the map viewer
-        for (SwingWaypoint w : waypoints) {
-            mapViewer.add(w.getButton());
-        }
-
+        
     
+        
+        mapViewer.addMouseListener(new MouseAdapter(){
+     public void mouseClicked(MouseEvent e) {
+            if(e.getClickCount() == 1 && e.getButton() == MouseEvent.BUTTON3){
+                java.awt.Point p = e.getPoint();
+                GeoPosition geo = mapViewer.convertPointToGeoPosition(p);
+                System.out.println("X:"+geo.getLatitude()+",Y:"+geo.getLongitude());
+                
+                //Add to the array list
+                wayPointsLatMap.add(geo.getLatitude());
+                wayPointsLonMap.add(geo.getLongitude());
+               
+                Set<MyWaypoint> waypoints = new HashSet<MyWaypoint>();
+                        
+                // read the array do something everytime you go through the array 
+		for (int i = 0; i < wayPointsLatMap.size(); i++) {
+			System.out.println(wayPointsLatMap.get(i) + " array list " + i);
+                        System.out.println(wayPointsLonMap.get(i) + " array list " + i);
+                        
+                        waypoints.add(
+                                  
+                new MyWaypoint ( String.valueOf(i), Color.ORANGE, new GeoPosition((wayPointsLatMap.get(i)), (wayPointsLonMap.get(i))))
+                //new MyWaypoint ( String.valueOf(i-1), Color.ORANGE, new GeoPosition((wayPointsLatMap.get(i-1)), (wayPointsLonMap.get(i-1))))
+             
+                );
+                        
+                System.out.println(waypoints.toString());
+        // Create a waypoint painter that takes all the waypoints
+        WaypointPainter<MyWaypoint> waypointPainter = new WaypointPainter<MyWaypoint>();
+        waypointPainter.setWaypoints(waypoints);
+        waypointPainter.setRenderer(new FancyWaypointRenderer());
+
+        mapViewer.setOverlayPainter(waypointPainter);
+		}
+                     }
+                }
+                });
+        
+        
+        /*        mapViewer.addPropertyChangeListener("zoom", new PropertyChangeListener()
+        {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt)
+            {
+                // this runs if you double click 
+                System.out.println(" prop change");
+                
+                updateLatLongDoubleClick(mapViewer);
+                
+                
+            }
+        });
+
+        mapViewer.addPropertyChangeListener("center", new PropertyChangeListener()
+        {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt)
+            {
+                // this happens when you scroll
+                System.out.println(" prop1 change worked");
+                updateLatLong(mapViewer);
+                System.out.println(" prop1 one update");
+                
+                System.out.println(" prop1 change worked1");
+            }
+        });
+        
+        */
+        
+        
+        
+        
+        System.out.println(" first one start");
+        updateLatLong(mapViewer);
+        System.out.println(" first one update");
+        latLong.setText("My Text lat " + lati2 );
+        System.out.println(" first one worked");
 
         
         createAndSetSwingMap(swingNode);
@@ -235,6 +320,50 @@ public class MissionControlController implements Initializable {
         lstFile= new ArrayList<>();
         lstFile.add("*.json");
     }    
+    
+    private void updateLatLong ( JXMapViewer mapViewer)
+    {
+        lati = mapViewer.getCenterPosition().getLatitude();
+        longi = mapViewer.getCenterPosition().getLongitude();
+        zoom = mapViewer.getZoom();
+
+        lati2 = String.valueOf(lati);
+        longi2 = String.valueOf(longi);
+        zoom2 = String.valueOf(zoom);
+        //swingNode.getContent().latLongLabel.setText("");
+                
+                
+        //frame.setTitle(String.format("JXMapviewer2 Example 3 (%.2f / %.2f) - Zoom: %d", lat, lon, zoom));
+        System.out.println(" Lat" + lati2 + "Long" + longi2 +"zoom "+  zoom2 );
+       
+       
+    }
+    
+     private void updateLatLongDoubleClick ( JXMapViewer mapViewer)
+    {
+        /*
+        lati = mapViewer.getCenterPosition().getLatitude();
+        longi = mapViewer.getCenterPosition().getLongitude();
+        zoom = mapViewer.getZoom();
+
+        lati2 = String.valueOf(lati);
+        longi2 = String.valueOf(longi);
+        zoom2 = String.valueOf(zoom);
+        //swingNode.getContent().latLongLabel.setText("");
+       
+                
+                
+                
+        //frame.setTitle(String.format("JXMapviewer2 Example 3 (%.2f / %.2f) - Zoom: %d", lat, lon, zoom));
+        System.out.println(" Lat" + lati2 + "Long" + longi2 +"zoom "+  zoom2 );
+        wayPointsLatMap.add(lati2);
+        wayPointsLonMap.add(longi2);
+        System.out.println("lats =" + wayPointsLatMap );
+        System.out.println( "Longs =" + wayPointsLonMap);
+       */
+       
+    }
+    
     
     @FXML
   private void loadConfig(ActionEvent event) {
@@ -505,7 +634,7 @@ public class MissionControlController implements Initializable {
         
     @FXML
     private void runConfig(ActionEvent event) {
-        
+    
         System.out.println("Run config Pressed" );
         
         // the if statement below reads the text values from the spinners and checks to see if they are blank.
@@ -777,6 +906,7 @@ public class MissionControlController implements Initializable {
             @Override
             public void run() {
                 swingNode.setContent(mapViewer);
+            
             }
         });
     }

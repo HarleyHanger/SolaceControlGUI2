@@ -397,6 +397,7 @@
                                                 <Insets bottom="50.0" />
                                              </VBox.margin>
                                           </Label>
+                                          <Label fx:id="latLong" text="Lat and long:" />
                                        </children>
                                     </VBox>
                                  </children>
