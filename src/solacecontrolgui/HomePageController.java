@@ -64,7 +64,7 @@ public class HomePageController implements Initializable {
         Parent parent = FXMLLoader.load(getClass().getResource("/solacecontrolgui/MissionControl.fxml"));
         Stage stage = new Stage();
         stage.setMaximized(true);
-        stage.initModality(Modality.APPLICATION_MODAL);
+        //stage.initModality(Modality.APPLICATION_MODAL);
         //stage.initStyle(StageStyle.UNDECORATED);
         
         Scene scene = new Scene(parent);

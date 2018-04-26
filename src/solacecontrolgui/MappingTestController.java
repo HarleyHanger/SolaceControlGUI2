@@ -91,6 +91,9 @@ public class MappingTestController implements Initializable {
 
         
          createAndSetSwingMap(swingNode);
+         
+         final String dir = System.getProperty("user.dir");
+                System.out.println("current dir = " + dir);
         
     
       
