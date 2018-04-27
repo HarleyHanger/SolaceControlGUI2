@@ -27,6 +27,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -196,6 +198,9 @@ public class MissionControlController implements Initializable {
      Set<MyWaypoint> waypoints = new HashSet<MyWaypoint>();
    WaypointPainter<MyWaypoint> waypointPainter = new WaypointPainter<MyWaypoint>();
    
+   Set<MyWaypoint> boatPosition = new HashSet<MyWaypoint>();
+         WaypointPainter<MyWaypoint> waypointBoatPainter = new WaypointPainter<MyWaypoint>();
+   
    File fileOutput;
    
 
@@ -273,7 +278,7 @@ public class MissionControlController implements Initializable {
         mapViewer.addMouseMotionListener(sa);
         mapViewer.setOverlayPainter(sp);
 
-        
+         boatPositionLoop();
     
         
         mapViewer.addMouseListener(new MouseAdapter(){
@@ -296,7 +301,7 @@ public class MissionControlController implements Initializable {
                         
                 waypoints.add(
                                   
-                new MyWaypoint ( String.valueOf(i+1), Color.ORANGE, new GeoPosition((wayPointsLatMap.get(i)), (wayPointsLonMap.get(i))))
+                new MyWaypoint ( "        " + String.valueOf(i+1), Color.ORANGE, new GeoPosition((wayPointsLatMap.get(i)), (wayPointsLonMap.get(i))))
                 //new MyWaypoint ( String.valueOf(i-1), Color.ORANGE, new GeoPosition((wayPointsLatMap.get(i-1)), (wayPointsLonMap.get(i-1))))
              
                 );
@@ -315,16 +320,22 @@ public class MissionControlController implements Initializable {
 		}
                      }
             else{
+                
                 System.out.println(" Mission Control is Selected");
+             
+                    
+                    }
             }
-                }
+                
      
      // end mouse click
+
+         
                 });
         
        
         // start the array for the boats position
-        boatPositionLoop();
+       
 
 
 
@@ -399,115 +410,75 @@ public class MissionControlController implements Initializable {
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Json Files" , lstFile));
         File f = fc.showOpenDialog(null);
         
+        fileOutput = f;
+        
         // if file isnt empty
         if (f!= null)
         {
-           // try loading the details from the json file into 
+           // try loading the details from the json file 
             try {
-                System.out.println("loadedfile" + f.getAbsolutePath());
-                fileToLoad = f.getAbsolutePath();
                 
-                  // set output to read
-                    fileOutput = f;
+            String content2 = new Scanner(fileOutput).useDelimiter("\\Z").next();
+            System.out.println( "content 2" + content2 );
+            String loadInputLine = content2;
+            
+            
+           clearConfig();
+           
+           updateBoatMarker();
+           
+           fileLoadedName.setText("File Loaded: '"  + fileOutput + "'");
+           
+
+           
+                org.json.JSONArray jsonarray = new org.json.JSONArray("[" + loadInputLine + "]");   
+                for (int i = 0; i < jsonarray.length(); i++){
+                    org.json.JSONObject obj = jsonarray.getJSONObject(i);
+                    System.out.println(" input line " + loadInputLine);
                     
-                
-                fileLoadedName.setText("file Loaded:"  + fileToLoad);
-                
-                JSONArray a = (JSONArray) parser.parse(new FileReader(fileToLoad));
-               
-                for (Object o : a)
-                {
-                    JSONObject mission = (JSONObject) o;
+                    String waypointOutput = obj.getString("waypoints");
+                    String[] position = waypointOutput.split(",");
+                    int positionLength = position.length;
                     
+                    for( int l=0; l < positionLength -1; l = l + 2){
+                          // Used for boat position
+                    String loadLat = position[l]; 
+                    String loadLon = position[l+1];
+                    loadLat = loadLat.replace("[", "");   loadLat = loadLat.replace("]", "");  
+                    loadLon = loadLon.replace("]", ""); loadLon = loadLon.replace("[", "");
                     
-                    //Start latitude Spinner
-                    String latDegree = (String) mission.get("startLatitude" + "");
-                    System.out.println(latDegree);
-                    startLatSpinner.getEditor().setText(latDegree);
-                    
-                    
-                    
-                    //Start Longitude Spinner
-                    String lonDegree = (String) mission.get("startLongitude" + "");
-                    System.out.println(lonDegree);
-                    startLonSpinner.getEditor().setText(lonDegree);
-                    
-                    // waypoint 1 Longitude Spinner
-                    String waypoint1LatDegree = (String) mission.get("wayPointLat1" + "");
-                    System.out.println(waypoint1LatDegree);
-                    wayPointLat1.getEditor().setText(waypoint1LatDegree);
-                    
-                    
-                    // waypoint 1 Longitude Spinner
-                    String waypoint1LongDegree = (String) mission.get("wayPointLong1" + "");
-                    System.out.println(waypoint1LongDegree);
-                    wayPointLong1.getEditor().setText(waypoint1LongDegree);
-                    
-                    //waypoint2 latitude Spinner
-                    String waypoint2LatDegree = (String) mission.get("wayPointLat2" + "");
-                    System.out.println(waypoint2LatDegree);
-                    wayPointLat2.getEditor().setText(waypoint2LatDegree);
-                    
-                    
-                    //waypoint2 latitude Spinner
-                    String waypoint2LongDegree = (String) mission.get("wayPointLong2" + "");
-                    System.out.println(waypoint2LongDegree);
-                    wayPointLong2.getEditor().setText(waypoint2LongDegree);
-                    
-                    
-                    //waypoint3 latitude Spinner
-                    String waypoint3LatDegree = (String) mission.get("wayPointLat3" + "");
-                    System.out.println(waypoint3LatDegree);
-                    wayPointLat3.getEditor().setText(waypoint3LatDegree);
-                    
-                    
-                   //waypoint3 longitude Spinner
-                    String waypoint3LongDegree = (String) mission.get("wayPointLong3" + "");
-                    System.out.println(waypoint3LongDegree);
-                    wayPointLong3.getEditor().setText(waypoint3LongDegree);
+                    wayPointsLatMap.add(Double.parseDouble(loadLat));
+                    wayPointsLonMap.add(Double.parseDouble(loadLon));
+
+                    System.out.println( "Waypoint Number: " + l + " read in values: " + loadLat + " + "+ loadLon);
+                    }
+                    for (int w = 0; w < wayPointsLatMap.size(); w++) {
+			System.out.println(wayPointsLatMap.get(w) + " array list " + i);
+                        System.out.println(wayPointsLonMap.get(w) + " array list " + i);
+                        
+                        waypoints.add(
+
+                        new MyWaypoint ( "        " + String.valueOf(w), Color.ORANGE, new GeoPosition((wayPointsLatMap.get(w)), (wayPointsLonMap.get(w))))
+                        //new MyWaypoint ( String.valueOf(i-1), Color.ORANGE, new GeoPosition((wayPointsLatMap.get(i-1)), (wayPointsLonMap.get(i-1))))
+
+                        );
+
+                        System.out.println(waypoints.toString());
+                // Create a waypoint painter that takes all the waypoints
+
+                waypointPainter.setWaypoints(waypoints);
+                waypointPainter.setRenderer(new FancyWaypointRenderer());
+
+                mapViewer.setOverlayPainter(waypointPainter);
                       
-                
-                    //waypoint4 latitude Spinner
-                    String waypoint4LatDegree = (String) mission.get("wayPointLat4" + "");
-                    System.out.println(waypoint4LatDegree);
-                    wayPointLat4.getEditor().setText(waypoint4LatDegree);
-                    
-                    
-                    //waypoint4 longitude Spinner
-                    String waypoint4LongDegree = (String) mission.get("wayPointLong4" + "");
-                    System.out.println(waypoint4LongDegree);
-                    wayPointLong4.getEditor().setText(waypoint4LongDegree);
-                      
-                
-                     //end latitude Spinner
-                    String endLatDegree = (String) mission.get("endLatitude" + "");
-                    System.out.println(endLatDegree);
-                    endLatitude.getEditor().setText(endLatDegree);
-                    
-                    
-                      //end latitude Spinner
-                    String endLongDegree = (String) mission.get("endLongitude" + "");
-                    System.out.println(endLongDegree);
-                    endLongitude.getEditor().setText(endLongDegree);
-                      
-                    
-                   
-                    
-                  
-                    
-                    
-                    
-                   
-                    
-                    
-                }
+                             }   
+   
+            }
 
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ParseException ex) {
-                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            }  catch (JSONException ex) {
+                Logger.getLogger(MissionControlController.class.getName()).log(Level.SEVERE, null, ex);
             }
            
            
@@ -516,8 +487,7 @@ public class MissionControlController implements Initializable {
         else {
              fileLoadedName.setText("file was not selected or is invalid");
         }
- 
-        
+
     }
   
    
@@ -531,9 +501,7 @@ public class MissionControlController implements Initializable {
        
        endLatitude.getEditor().setText(startLat);
        endLongitude.getEditor().setText(startLong);
-       
-      
-  
+
   }
      @FXML
   private void way1Disable(ActionEvent event) {
@@ -570,11 +538,9 @@ public class MissionControlController implements Initializable {
                      System.out.println("Way point 2 Enabled");
                       wayPointLat2.getEditor().setText("");
                       wayPointLong2.getEditor().setText("");
-                     break;
-                              
+                     break;                      
       }          
-       
-    
+
   }
       
           @FXML
@@ -672,6 +638,90 @@ public class MissionControlController implements Initializable {
 
     }
     }
+    
+     @FXML
+    private void loadCurrentWaypoints(ActionEvent event) {
+    
+       try {
+           URL boatD = new URL("http://52.232.121.121:3333/waypoints"); // URL to Parse
+           URLConnection yc = boatD.openConnection();
+           BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
+           
+           
+            String inputLine;
+            
+            
+            while ((inputLine = in.readLine()) != null) {    
+                wayPointsLatMap.clear();
+                wayPointsLonMap.clear();
+
+                org.json.JSONArray jsonarray = new org.json.JSONArray("[" +inputLine + "]");   
+                for (int i = 0; i < jsonarray.length(); i++){
+                    org.json.JSONObject obj = jsonarray.getJSONObject(i);
+                    
+            
+                    String waypointOutput = obj.getString("waypoints");
+                    String[] position = waypointOutput.split(",");
+                    
+                    // Used for boat position
+                    lat = position[0]; 
+                    lon = position[1];
+                    
+                    
+                   
+        
+                    System.out.println("lat + " + lat + "long + " + lon);
+                    String[] waypointsNumber = waypointOutput.split(",");
+                    int positionLength = waypointsNumber.length;
+                    
+                    for( int l=0; l < positionLength -1; l = l + 2){
+                          // Used for boat position
+                    String loadLat = position[l]; 
+                    String loadLon = position[l+1];
+                    loadLat = loadLat.replace("[", "");   loadLat = loadLat.replace("]", "");  
+                    loadLon = loadLon.replace("]", ""); loadLon = loadLon.replace("[", "");
+                    
+                    wayPointsLatMap.add(Double.parseDouble(loadLat));
+                    wayPointsLonMap.add(Double.parseDouble(loadLon));
+
+                    System.out.println( "Waypoint Number: " + l + " read in values: " + loadLat + " + "+ loadLon);
+                    }
+                    for (int w = 0; w < wayPointsLatMap.size(); w++) {
+			System.out.println(wayPointsLatMap.get(w) + " array list " + i);
+                        System.out.println(wayPointsLonMap.get(w) + " array list " + i);
+                        
+                        waypoints.add(
+
+                        new MyWaypoint ( "        " + String.valueOf(w), Color.ORANGE, new GeoPosition((wayPointsLatMap.get(w)), (wayPointsLonMap.get(w))))
+                        //new MyWaypoint ( String.valueOf(i-1), Color.ORANGE, new GeoPosition((wayPointsLatMap.get(i-1)), (wayPointsLonMap.get(i-1))))
+
+                        );
+
+                        System.out.println(waypoints.toString());
+                // Create a waypoint painter that takes all the waypoints
+
+                waypointPainter.setWaypoints(waypoints);
+                waypointPainter.setRenderer(new FancyWaypointRenderer());
+
+                mapViewer.setOverlayPainter(waypointPainter);
+                      
+        
+    }
+            }
+    
+    
+       }
+    }  catch (JSONException ex) {
+           Logger.getLogger(MissionControlController.class.getName()).log(Level.SEVERE, null, ex);
+       } catch (IOException ex) {
+           Logger.getLogger(MissionControlController.class.getName()).log(Level.SEVERE, null, ex);
+       }
+    }
+    
+    
+    
+    
+    
     
  
         
@@ -899,7 +949,7 @@ public class MissionControlController implements Initializable {
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");
 
-      
+      //String input = content;
         
         String input = content; /* "{\n" +
 "  \"waypoints\": [\n" +
@@ -956,7 +1006,9 @@ public class MissionControlController implements Initializable {
             String inputLine;
             
             while ((inputLine = in.readLine()) != null) {    
-                
+                // Comms Btn green if theres no error
+                commsBtn.setStyle("-fx-background-color: #008000");
+                commsBtnStatus = 0;
                 //System.out.println("input line" + inputLine);
                 //arrayHere.setText(inputLine);
                 
@@ -987,34 +1039,36 @@ public class MissionControlController implements Initializable {
                    // System.out.println(aparentOutput);
                    // System.out.println(absoluteOutput);
                     //System.out.println("speed" + speedOutput);
-                    
+                   
+                
                     
                     //System.out.println("lat" + lat + "long"+ lon);
-                   
-                    
-               // Print Recieved Data to CSV   
-               
-           
-                
-                
-                    
-                    
-                      
+
                 // Replace Chars from latitude and longitude
                lat = lat.replace("[", "");  lon = lon.replace("]", "");
                // Remove Extras charecters from the speed
-               speed = speed.replace("apparent", ""); speed = speed.replace(",", ""); speed = speed.replace("\"", "");
+               speed = speed.replace("apparent", ""); speed = speed.replace(",", ""); speed = speed.replace("\"", ""); //speed = speed.substring(3);
                // Remove from apparent
                apparent = apparent.replace ("}","");
                // Remove from absolute
                absolute = absolute.replace (",",""); absolute = absolute.replace ("speed",""); absolute = absolute.replace ("\"",""); 
                
-                                
+               // If the user wishes to show more decimal places on the heading , absolute and speed add on 0's to the decimal format
+               NumberFormat formatter = new DecimalFormat("#0.0");  
+               Double speedDouble = Double.parseDouble(speed);
+               Double absolouteDouble = Double.parseDouble(absolute);
+               Double headingDouble = Double.parseDouble(headingOutput);
+               
+               // New strings are made so that the data printed to file will be more accurate
+               String speed1 = formatter.format(speedDouble);
+               String absolute1 = formatter.format(absolouteDouble);
+               String headingOutput1 = formatter.format(headingDouble);
+             
                // active.setText(activeOutput);
-                windSpeed.setText(speed);
+                windSpeed.setText(speed1);
                 windApparent.setText(apparent);
-                windAbsolute.setText(absolute);
-                heading.setText(headingOutput);
+                windAbsolute.setText(absolute1);
+                heading.setText(headingOutput1);
                 positionLat.setText(lat);
                 positionLon.setText(lon);
                 //active.setText(activeOutput);
@@ -1060,19 +1114,6 @@ public class MissionControlController implements Initializable {
                 
                     
                 }
-               /*
-                JSONParser parser = new JSONParser();
-                Object obj  = parser.parse(inputLine);
-                JSONArray array = new JSONArray();
-                array.add(obj);
-                for( int i = 0 < array.length(); i++){
-                    JSONObject jsonobject = array.getJSONObject(i);
-                
-                }
-*/
-                
-              
-                
 
     }
  }     catch (MalformedURLException ex) {
@@ -1108,7 +1149,67 @@ public class MissionControlController implements Initializable {
        
        @FXML
     private void eStop(ActionEvent event){
-        System.out.println(mcTab.isSelected());
+
+        clearConfig();
+         
+          try {
+
+        URL url1 = new URL("http://52.232.121.121:3333/waypoints");
+        HttpURLConnection conn1 = (HttpURLConnection) url1.openConnection();
+        conn1.setDoOutput(true);
+        conn1.setRequestMethod("POST");
+        conn1.setRequestProperty("Content-Type", "application/json");
+/* "{\n" +
+"  \"waypoints\": [\n" +
+"    [0.0, 0.0],\n" +
+"    [1.0, 1.0],\n" +
+"    [2.0, 2.0]\n" +
+"  ]\n" +
+"}";
+*/
+      
+        
+        String input = "{\n" +
+"  \"waypoints\": [\n" +
+"    " + boatPositionLat + "," + boatPositionLon + "\n" +
+"  ]\n" +
+"}";
+             
+        System.out.println("input " + input);
+
+        OutputStream os = conn1.getOutputStream();
+        os.write(input.getBytes());
+        
+        
+        os.flush();
+
+        if (conn1.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
+            throw new RuntimeException("HTTP error code : "
+                    + conn1.getResponseCode());
+        }
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(
+                (conn1.getInputStream())));
+
+        String output;
+        System.out.println("Output from Server .... \n");
+        while ((output = br.readLine()) != null) {
+            System.out.println(output);
+        }
+
+        conn1.disconnect();
+
+      } catch (MalformedURLException e) {
+
+        e.printStackTrace();
+
+      } catch (IOException e) {
+
+        e.printStackTrace();
+
+     }
+         
+         
     }
     @FXML
      private void HomeBtn(ActionEvent event) throws Exception{
@@ -1147,8 +1248,10 @@ public class MissionControlController implements Initializable {
     
     // this method is used to update the boats marker on screen 
     private void updateBoatMarker(){
+         
             if(mcTab.isSelected() == true){
     
+               boatPosition.clear();
                boatPositionLat.clear();
                boatPositionLon.clear();
                  
@@ -1157,31 +1260,42 @@ public class MissionControlController implements Initializable {
                
                //System.out.println(" printing boat position + ways now ");
                 // read the array do something everytime you go through the array 
-                Set<MyWaypoint> boatPosition = new HashSet<MyWaypoint>();
-		for (int i = 0; i < wayPointsLatMap.size(); i++) {
-                  
-
-                boatPosition.add(
-                            
-                new MyWaypoint ( String.valueOf(i+1), Color.ORANGE, new GeoPosition((wayPointsLatMap.get(i)), (wayPointsLonMap.get(i))))
-                
-             
-                );    
-                 boatPosition.add(   
-                new MyWaypoint ( "Boat", Color.RED, new GeoPosition((Double.parseDouble(lat)), (Double.parseDouble(lon))))
+               
+                     
+                     boatPosition.add(   
+                new MyWaypoint ( "        Solace", Color.RED, new GeoPosition((Double.parseDouble(lat)), (Double.parseDouble(lon))))
                         
                  );
-                        
-        //System.out.println(boatPosition.toString());
-        // Create a waypoint painter that takes all the waypoints
-        WaypointPainter<MyWaypoint> waypointBoatPainter = new WaypointPainter<MyWaypoint>();
-        waypointBoatPainter.setWaypoints(boatPosition);
-        waypointBoatPainter.setRenderer(new FancyWaypointRenderer());
-        mapViewer.setOverlayPainter(waypointBoatPainter);
+                         //System.out.println(boatPosition.toString());
+                // Create a waypoint painter that takes all the waypoints
+                
+                waypointBoatPainter.setWaypoints(boatPosition);
+                waypointBoatPainter.setRenderer(new FancyWaypointRenderer());
+                mapViewer.setOverlayPainter(waypointBoatPainter);
+            }     
+		for (int i = 0; i < wayPointsLatMap.size(); i++) {
+                    
+               
+                  
+                    if (wayPointsLatMap.size() != 0){
+                boatPosition.add(
+                            
+                new MyWaypoint ( "        " + String.valueOf(i+1), Color.ORANGE, new GeoPosition((wayPointsLatMap.get(i)), (wayPointsLonMap.get(i))))
+
+                );    
+                    }
+               
+                      
+                //System.out.println(boatPosition.toString());
+                // Create a waypoint painter that takes all the waypoints
+               
+                waypointBoatPainter.setWaypoints(boatPosition);
+                waypointBoatPainter.setRenderer(new FancyWaypointRenderer());
+                mapViewer.setOverlayPainter(waypointBoatPainter);
        
         
 		}
-            }
+            
     }
     @FXML
   private void commsBtnPress(ActionEvent event) {
@@ -1195,7 +1309,7 @@ public class MissionControlController implements Initializable {
                     String s ="Comms are fine, press OK";
                     alert.setContentText(s);
                     alert.show();
-                
+                    retriveData();
                     }
       
         if(commsBtnStatus == 1){
@@ -1243,5 +1357,54 @@ public class MissionControlController implements Initializable {
                 
                     }
   }
+  
+    @FXML
+  private void clearConfigBtn(ActionEvent event) {
+      clearConfig();
+  }
+  
+
+  private void clearConfig() {
+      
+      System.out.println("Config Cleared");
+      
+       wayPointsLatMap.clear();
+       wayPointsLonMap.clear();
+       
+       boatPositionLat.clear();
+       boatPositionLon.clear();
+       
+       boatPosition.clear();
+       waypoints.clear();
+                 
+              
+               
+               //System.out.println(" printing boat position + ways now ");
+                // read the array do something everytime you go through the array 
+               
+                     
+                 
+                
+                waypointBoatPainter.setWaypoints(boatPosition);
+                waypointBoatPainter.setRenderer(new FancyWaypointRenderer());
+                mapViewer.setOverlayPainter(waypointBoatPainter);
+                
+                     //System.out.println(boatPosition.toString());
+                // Create a waypoint painter that takes all the waypoints
+               
+                waypointBoatPainter.setWaypoints(boatPosition);
+                waypointBoatPainter.setRenderer(new FancyWaypointRenderer());
+                mapViewer.setOverlayPainter(waypointBoatPainter);
+       
+            }     
+		
+               
+                      
+           
+        
 }
+
+  
+  
+
 

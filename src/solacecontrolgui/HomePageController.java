@@ -5,6 +5,7 @@
  */
 package solacecontrolgui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -33,8 +34,7 @@ import javafx.stage.StageStyle;
  */
 public class HomePageController implements Initializable {
     
-    @FXML
-    private Label timer;
+   
     // Home button 1 , 2 ,3 
     @FXML
     private Button btn1;
@@ -63,7 +63,7 @@ public class HomePageController implements Initializable {
         // sets up the stage
         Parent parent = FXMLLoader.load(getClass().getResource("/solacecontrolgui/MissionControl.fxml"));
         Stage stage = new Stage();
-        stage.setMaximized(true);
+        //stage.setMaximized(true);
         //stage.initModality(Modality.APPLICATION_MODAL);
         //stage.initStyle(StageStyle.UNDECORATED);
         
@@ -89,6 +89,23 @@ public class HomePageController implements Initializable {
         stage.show();
 
 }
+    
+    
+        @FXML
+    private void otherBtn(ActionEvent event) throws IOException {
+        // hides previous window
+        ((Node)(event.getSource())).getScene().getWindow().hide();
+        // sets up the stage
+        Parent parent = FXMLLoader.load(getClass().getResource("/solacecontrolgui/randompage.fxml"));
+        Stage stage = new Stage();
+        stage.setMaximized(true);
+        Scene scene = new Scene(parent);
+        
+        stage.setScene(scene);
+        stage.setTitle("Mission Control");
+        stage.show();
+    }
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
        
@@ -100,7 +117,7 @@ public class HomePageController implements Initializable {
     //get current date time with Calendar()
     Calendar cal = Calendar.getInstance();
     System.out.println(dateFormat.format(cal.getTime()));
-    timer.setText(dateFormat.format(cal.getTime()));
+  
     
      
         

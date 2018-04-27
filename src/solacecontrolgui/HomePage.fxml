@@ -25,19 +25,12 @@
                            </image>
                         </ImageView>
                      </left>
-                     <right>
-                        <Label fx:id="timer" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="43.0" prefWidth="947.0" text="23:00" textAlignment="RIGHT" textFill="WHITE" BorderPane.alignment="CENTER">
-                           <font>
-                              <Font size="29.0" />
-                           </font>
-                        </Label>
-                     </right>
                   </BorderPane>
                </children>
             </VBox>
          </top>
          <bottom>
-            <HBox alignment="BOTTOM_LEFT" prefHeight="41.0" prefWidth="1024.0" style="-fx-background-color: #686868;" BorderPane.alignment="CENTER">
+            <HBox alignment="BOTTOM_LEFT" style="-fx-background-color: #686868;" BorderPane.alignment="CENTER">
                <children>
                   <Label fx:id="breadcrumb" text="Homepage" textFill="WHITE">
                      <font>
@@ -62,7 +55,7 @@
                         </Label>
                         <ImageView fitHeight="300.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@images/sailboat.png" />
+                              <Image url="@solaceGUIIcon.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -81,7 +74,7 @@
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
                         </Button>
-                        <Button fx:id="btn3" minHeight="40.0" minWidth="120.0" mnemonicParsing="false" text="About">
+                        <Button fx:id="btn3" minHeight="40.0" minWidth="120.0" mnemonicParsing="false" onAction="#otherBtn" text="About">
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
