@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
@@ -23,6 +24,9 @@ public class SolaceControlGUI extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setMaximized(true);
+     
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.setTitle("Login");
         stage.show();
     }

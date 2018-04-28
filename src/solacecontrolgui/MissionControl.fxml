@@ -6,8 +6,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.Spinner?>
-<?import javafx.scene.control.SpinnerValueFactory.DoubleSpinnerValueFactory?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
@@ -62,316 +60,6 @@
          <left>
             <TabPane fx:id="tabPane" prefHeight="659.0" prefWidth="409.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
                <tabs>
-                  <Tab fx:id="mpTab" closable="false" text="Mission Planning">
-                     <content>
-                        <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="565.0" prefWidth="411.0">
-                           <children>
-                              <ImageView fitHeight="150.0" fitWidth="281.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/Southampton_Solent_University.svg_.png" />
-                                 </image>
-                              </ImageView>
-                              <HBox alignment="CENTER" />
-                              <ScrollPane hbarPolicy="NEVER" prefHeight="296.0" prefWidth="492.0">
-                                 <content>
-                                    <GridPane prefHeight="240.0" prefWidth="391.0">
-                                       <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="8.55553913116455" prefWidth="8.55553913116455" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="110.0" />
-                                          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="71.33331807454425" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="110.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="96.11107381184894" />
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                       </rowConstraints>
-                                       <children>
-                                          <Label fx:id="wayLatLabel2" text="Waypoint 2:" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                                             <font>
-                                                <Font size="10.0" />
-                                             </font>
-                                             <opaqueInsets>
-                                                <Insets bottom="10.0" />
-                                             </opaqueInsets>
-                                             <GridPane.margin>
-                                                <Insets left="2.0" right="2.0" />
-                                             </GridPane.margin>
-                                          </Label>
-                                          <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Start" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                                             <GridPane.margin>
-                                                <Insets />
-                                             </GridPane.margin>
-                                             <font>
-                                                <Font size="10.0" />
-                                             </font>
-                                          </Label>
-                                          <Spinner fx:id="startLatSpinner" onMouseReleased="#saveConfig" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                            <valueFactory>
-                                                <SpinnerValueFactory.DoubleSpinnerValueFactory initialValue="0" max="90" min="-90" />
-                                            </valueFactory>
-                                             <GridPane.margin>
-                                                <Insets bottom="4.0" />
-                                             </GridPane.margin>
-                                        </Spinner>
-                                          <Spinner fx:id="startLonSpinner" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                                              <valueFactory>
-                                                <SpinnerValueFactory.DoubleSpinnerValueFactory initialValue="0" max="180" min="-180" />
-                                            </valueFactory>
-                                             <opaqueInsets>
-                                                <Insets />
-                                             </opaqueInsets>
-                                             <GridPane.margin>
-                                                <Insets bottom="4.0" />
-                                             </GridPane.margin>
-                                          </Spinner>
-                                          <Label text="Waypoint 1: " GridPane.columnIndex="2" GridPane.rowIndex="2">
-                                             <font>
-                                                <Font size="10.0" />
-                                             </font>
-                                             <opaqueInsets>
-                                                <Insets bottom="10.0" />
-                                             </opaqueInsets>
-                                             <GridPane.margin>
-                                                <Insets left="2.0" right="2.0" />
-                                             </GridPane.margin>
-                                          </Label>
-                                          <Spinner fx:id="wayPointLat1" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                              <valueFactory>
-                                                <SpinnerValueFactory.DoubleSpinnerValueFactory initialValue="0" max="90" min="-90" />
-                                            </valueFactory>
-                                             <opaqueInsets>
-                                                <Insets />
-                                             </opaqueInsets>
-                                             <GridPane.margin>
-                                                <Insets bottom="4.0" top="4.0" />
-                                             </GridPane.margin>
-                                          </Spinner>
-                                          <Spinner fx:id="wayPointLong1" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                                              <valueFactory>
-                                                <SpinnerValueFactory.DoubleSpinnerValueFactory initialValue="0" max="180" min="-180" />
-                                            </valueFactory>
-                                             <opaqueInsets>
-                                                <Insets />
-                                             </opaqueInsets>
-                                             <GridPane.margin>
-                                                <Insets bottom="4.0" top="4.0" />
-                                             </GridPane.margin>
-                                          </Spinner>
-                                          <Spinner fx:id="wayPointLong2" GridPane.columnIndex="3" GridPane.rowIndex="3">
-                                          <valueFactory>
-                                                <SpinnerValueFactory.DoubleSpinnerValueFactory initialValue="0" max="90" min="-90" />
-                                            </valueFactory>
-                                             <GridPane.margin>
-                                                <Insets bottom="4.0" top="4.0" />
-                                             </GridPane.margin>
-                                          </Spinner>
-                                          <Spinner fx:id="wayPointLat2" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                               <valueFactory>
-                                                <SpinnerValueFactory.DoubleSpinnerValueFactory initialValue="0" max="180" min="-180" />
-                                            </valueFactory>
-                                             <opaqueInsets>
-                                                <Insets />
-                                             </opaqueInsets>
-                                             <GridPane.margin>
-                                                <Insets bottom="4.0" top="4.0" />
-                                             </GridPane.margin>
-                                          </Spinner>
-                                          <Spinner fx:id="wayPointLat3" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                                             <valueFactory>
-                                                <SpinnerValueFactory.DoubleSpinnerValueFactory initialValue="0" max="90" min="-90" />
-                                             </valueFactory>
-                                             <opaqueInsets>
-                                                <Insets />
-                                             </opaqueInsets>
-                                             <GridPane.margin>
-                                                <Insets bottom="4.0" top="4.0" />
-                                             </GridPane.margin>
-                                          </Spinner>
-                                          <Spinner fx:id="wayPointLat4" layoutX="160.0" layoutY="137.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                                             <valueFactory>
-                                                <SpinnerValueFactory.DoubleSpinnerValueFactory initialValue="0" max="90" min="-90" />
-                                             </valueFactory>
-                                             <opaqueInsets>
-                                                <Insets />
-                                             </opaqueInsets>
-                                             <GridPane.margin>
-                                                <Insets bottom="4.0" top="4.0" />
-                                             </GridPane.margin>
-                                          </Spinner>
-                                          <Label fx:id="wayLatLabel3" text="Waypoint 3:" GridPane.columnIndex="2" GridPane.rowIndex="4">
-                                             <font>
-                                                <Font size="10.0" />
-                                             </font>
-                                             <opaqueInsets>
-                                                <Insets bottom="10.0" />
-                                             </opaqueInsets>
-                                             <GridPane.margin>
-                                                <Insets left="2.0" right="2.0" />
-                                             </GridPane.margin>
-                                          </Label>
-                                          <Label fx:id="wayLatLabel4" text="Waypoint 4:" GridPane.columnIndex="2" GridPane.rowIndex="5">
-                                             <font>
-                                                <Font size="10.0" />
-                                             </font>
-                                             <opaqueInsets>
-                                                <Insets bottom="10.0" />
-                                             </opaqueInsets>
-                                             <GridPane.margin>
-                                                <Insets left="2.0" right="2.0" />
-                                             </GridPane.margin>
-                                          </Label>
-                                          <Spinner fx:id="wayPointLong3" GridPane.columnIndex="3" GridPane.rowIndex="4">
-                                             <valueFactory>
-                                                <SpinnerValueFactory.DoubleSpinnerValueFactory initialValue="0" max="180" min="-180" />
-                                             </valueFactory>
-                                             <GridPane.margin>
-                                                <Insets bottom="4.0" top="4.0" />
-                                             </GridPane.margin>
-                                          </Spinner>
-                                          <Spinner fx:id="wayPointLong4" GridPane.columnIndex="3" GridPane.rowIndex="5">
-                                             <valueFactory>
-                                                <SpinnerValueFactory.DoubleSpinnerValueFactory initialValue="0" max="180" min="-180" />
-                                             </valueFactory>
-                                             <GridPane.margin>
-                                                <Insets bottom="4.0" top="4.0" />
-                                             </GridPane.margin>
-                                          </Spinner>
-                                          <Spinner fx:id="endLatitude" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                                             <valueFactory>
-                                                <SpinnerValueFactory.DoubleSpinnerValueFactory initialValue="0" max="90" min="-90" />
-                                             </valueFactory>
-                                             <opaqueInsets>
-                                                <Insets />
-                                             </opaqueInsets>
-                                             <GridPane.margin>
-                                                <Insets bottom="4.0" top="4.0" />
-                                             </GridPane.margin>
-                                          </Spinner>
-                                          <Label fx:id="wayLongLabel41" text="End Longitude:" GridPane.columnIndex="2" GridPane.rowIndex="6">
-                                             <font>
-                                                <Font size="10.0" />
-                                             </font>
-                                             <opaqueInsets>
-                                                <Insets bottom="10.0" />
-                                             </opaqueInsets>
-                                          </Label>
-                                          <Spinner fx:id="endLongitude" GridPane.columnIndex="3" GridPane.rowIndex="6">
-                                             <valueFactory>
-                                                <SpinnerValueFactory.DoubleSpinnerValueFactory initialValue="0" max="180" min="-180" />
-                                             </valueFactory>
-                                             <GridPane.margin>
-                                                <Insets bottom="4.0" top="4.0" />
-                                             </GridPane.margin>
-                                          </Spinner>
-                                          <Button mnemonicParsing="false" onAction="#setEndValue" prefHeight="25.0" prefWidth="95.0" text="Set Value" GridPane.columnIndex="4" GridPane.rowIndex="6">
-                                             <GridPane.margin>
-                                                <Insets left="3.0" />
-                                             </GridPane.margin>
-                                             <font>
-                                                <Font size="8.0" />
-                                             </font>
-                                          </Button>
-                                          <Button mnemonicParsing="false" onAction="#way1Disable" prefHeight="25.0" prefWidth="70.0" text="ON/OFF" GridPane.columnIndex="4" GridPane.rowIndex="2">
-                                             <font>
-                                                <Font size="8.0" />
-                                             </font>
-                                             <GridPane.margin>
-                                                <Insets left="5.0" />
-                                             </GridPane.margin>
-                                          </Button>
-                                          <Button mnemonicParsing="false" onAction="#way2Disable" prefHeight="25.0" prefWidth="70.0" text="ON/OFF" GridPane.columnIndex="4" GridPane.rowIndex="3">
-                                             <font>
-                                                <Font size="8.0" />
-                                             </font>
-                                             <GridPane.margin>
-                                                <Insets left="5.0" />
-                                             </GridPane.margin>
-                                          </Button>
-                                          <Button mnemonicParsing="false" onAction="#way3Disable" prefHeight="25.0" prefWidth="70.0" text="ON/OFF" GridPane.columnIndex="4" GridPane.rowIndex="4">
-                                             <font>
-                                                <Font size="8.0" />
-                                             </font>
-                                             <GridPane.margin>
-                                                <Insets left="5.0" />
-                                             </GridPane.margin>
-                                          </Button>
-                                          <Button mnemonicParsing="false" onAction="#way4Disable" prefHeight="25.0" prefWidth="70.0" text="ON/OFF" GridPane.columnIndex="4" GridPane.rowIndex="5">
-                                             <font>
-                                                <Font size="8.0" />
-                                             </font>
-                                             <GridPane.margin>
-                                                <Insets left="5.0" />
-                                             </GridPane.margin>
-                                          </Button>
-                                          <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="LATITUDE" GridPane.columnIndex="1">
-                                             <GridPane.margin>
-                                                <Insets left="20.0" />
-                                             </GridPane.margin>
-                                          </Label>
-                                          <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="LONGITUDE" GridPane.columnIndex="3">
-                                             <GridPane.margin>
-                                                <Insets left="20.0" />
-                                             </GridPane.margin>
-                                          </Label>
-                                          <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="TOGGLE" GridPane.columnIndex="4">
-                                             <GridPane.margin>
-                                                <Insets left="15.0" />
-                                             </GridPane.margin>
-                                          </Label>
-                                       </children>
-                                    </GridPane>
-                                 </content>
-                              </ScrollPane>
-                              <VBox alignment="CENTER">
-                                 <children>
-                                    <HBox alignment="CENTER" prefHeight="48.0" prefWidth="359.0">
-                                       <children>
-                                          <Button mnemonicParsing="false" onAction="#loadConfig" text="Load WayPoints">
-                                             <font>
-                                                <Font size="16.0" />
-                                             </font>
-                                             <HBox.margin>
-                                                <Insets bottom="10.0" right="5.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                          <Button mnemonicParsing="false" onAction="#saveConfig" text="Save WayPoints">
-                                             <font>
-                                                <Font size="16.0" />
-                                             </font>
-                                             <HBox.margin>
-                                                <Insets bottom="10.0" left="5.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                       </children>
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                       <VBox.margin>
-                                          <Insets top="20.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <Label fx:id="fileLoadedName" alignment="CENTER" contentDisplay="CENTER" text="File Loaded" textAlignment="CENTER">
-                                       <VBox.margin>
-                                          <Insets bottom="20.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <Button mnemonicParsing="false" onAction="#clearConfigBtn" text="Clear WayPoints">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Button>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </VBox>
-                     </content>
-                  </Tab>
                   <Tab fx:id="mcTab" closable="false" text="Mission Control">
                     <content>
                       <AnchorPane prefHeight="573.0" prefWidth="409.0">
@@ -400,9 +88,6 @@
                                                 <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
                                                 <RowConstraints maxHeight="40.0" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
                                                 <RowConstraints maxHeight="40.0" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
-                                                <RowConstraints maxHeight="40.0" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
-                                              <RowConstraints maxHeight="40.0" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
-                                              <RowConstraints maxHeight="40.0" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
                                                 <RowConstraints maxHeight="40.0" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
@@ -478,7 +163,7 @@
                                                       <Font size="16.0" />
                                                    </font>
                                                 </TextField>
-                                                <Label alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="90.0" text="Speed: [knts]" GridPane.rowIndex="3">
+                                                <Label alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="90.0" text="Speed: [M/S]" GridPane.rowIndex="3">
                                                    <GridPane.margin>
                                                       <Insets />
                                                    </GridPane.margin>
@@ -521,16 +206,16 @@
                                           </GridPane>
                                        </content>
                                     </ScrollPane>
-                                    <VBox>
+                                    <VBox prefHeight="49.0" prefWidth="410.0">
                                        <children>
-                                          <HBox alignment="CENTER" prefHeight="84.0" prefWidth="410.0">
+                                          <HBox alignment="CENTER" prefHeight="52.0" prefWidth="410.0">
                                              <children>
                                                 <Button fx:id="commsBtn" mnemonicParsing="false" onAction="#commsBtnPress" prefHeight="70.0" prefWidth="70.0" text="COMMS">
                                                    <HBox.margin>
                                                       <Insets bottom="5.0" right="5.0" top="5.0" />
                                                    </HBox.margin>
                                                 </Button>
-                                                <Button fx:id="bActiveButton" mnemonicParsing="false" onAction="#bActivePressed" prefHeight="70.0" prefWidth="70.0" text=" BOAT&#10;ACTIVE">
+                                                <Button fx:id="bActiveButton" mnemonicParsing="false" onAction="#bActivePressed" prefHeight="53.0" prefWidth="70.0" text=" BOAT&#10;ACTIVE">
                                                    <HBox.margin>
                                                       <Insets bottom="5.0" left="5.0" top="5.0" />
                                                    </HBox.margin>
@@ -539,12 +224,55 @@
                                           </HBox>
                                        </children>
                                     </VBox>
+                                    <VBox alignment="CENTER" prefHeight="106.0" prefWidth="410.0">
+                                       <children>
+                                          <HBox alignment="CENTER" prefHeight="48.0" prefWidth="359.0">
+                                             <children>
+                                                <Button mnemonicParsing="false" onAction="#loadConfig" prefHeight="30.0" prefWidth="140.0" text="Load WayPoints">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <HBox.margin>
+                                                      <Insets bottom="5.0" right="5.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                                <Button mnemonicParsing="false" onAction="#saveConfig" prefHeight="30.0" prefWidth="140.0" text="Save WayPoints">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <HBox.margin>
+                                                      <Insets bottom="5.0" left="5.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                             </children>
+                                             <opaqueInsets>
+                                                <Insets />
+                                             </opaqueInsets>
+                                             <VBox.margin>
+                                                <Insets />
+                                             </VBox.margin>
+                                          </HBox>
+                                          <Label fx:id="fileLoadedName" alignment="CENTER" contentDisplay="CENTER" textAlignment="CENTER">
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <Button mnemonicParsing="false" onAction="#clearConfigBtn" prefHeight="30.0" prefWidth="130.0" text="Clear WayPoints">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" />
+                                             </VBox.margin>
+                                          </Button>
+                                       </children>
+                                    </VBox>
                                     <HBox alignment="CENTER">
                                        <VBox.margin>
                                           <Insets bottom="20.0" />
                                        </VBox.margin>
                                        <children>
-                                          <Button fx:id="startMBtn" mnemonicParsing="false" onAction="#runConfig" prefWidth="114.0" text="Start Mission">
+                                          <Button fx:id="startMBtn" mnemonicParsing="false" onAction="#runConfig" prefWidth="140.0" text="Upload Waypoints">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -552,7 +280,7 @@
                                                 <Insets right="5.0" />
                                              </HBox.margin>
                                           </Button>
-                                          <Button mnemonicParsing="false" onAction="#loadCurrentWaypoints" prefWidth="114.0" text="Current Config">
+                                          <Button mnemonicParsing="false" onAction="#loadCurrentWaypoints" prefWidth="140.0" text="Current Waypoints">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -563,7 +291,7 @@
                                     </HBox>
                                     <HBox alignment="CENTER">
                                        <children>
-                                          <Button mnemonicParsing="false" onAction="#eStop" prefHeight="46.0" prefWidth="248.0" style="-fx-background-color: #ff0000; -fx-border-color: #686868;" text="EMERGENCY STOP">
+                                          <Button mnemonicParsing="false" onAction="#eStop" prefHeight="46.0" prefWidth="300.0" style="-fx-background-color: #ff0000; -fx-border-color: #686868;" text="EMERGENCY STOP">
                                              <font>
                                                 <Font name="System Bold" size="20.0" />
                                              </font>
@@ -617,7 +345,7 @@
             </HBox>
          </bottom>
          <center>
-            <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="621.0" prefWidth="855.0" BorderPane.alignment="CENTER">
+            <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="670.0" prefWidth="972.0" BorderPane.alignment="CENTER">
                <center>
                   <SwingNode fx:id="swingNode" BorderPane.alignment="CENTER" />
                </center>

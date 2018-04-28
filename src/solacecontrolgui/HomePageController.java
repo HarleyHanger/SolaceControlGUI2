@@ -5,6 +5,7 @@
  */
 package solacecontrolgui;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DateFormat;
@@ -13,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +23,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -59,51 +62,68 @@ public class HomePageController implements Initializable {
     @FXML
     private void missionControlBtn(ActionEvent event) throws Exception{
         // hides previous window
-        ((Node)(event.getSource())).getScene().getWindow().hide();
+        
         // sets up the stage
         Parent parent = FXMLLoader.load(getClass().getResource("/solacecontrolgui/MissionControl.fxml"));
         Stage stage = new Stage();
-        //stage.setMaximized(true);
-        //stage.initModality(Modality.APPLICATION_MODAL);
-        //stage.initStyle(StageStyle.UNDECORATED);
-        
-        Scene scene = new Scene(parent);
-        stage.setScene(scene);
-        stage.setTitle("Mission Control");
-        stage.show();
-
-}
-
-        @FXML
-    private void TestBtn(ActionEvent event) throws Exception{
-        // hides previous window
-        ((Node)(event.getSource())).getScene().getWindow().hide();
-        // sets up the stage
-        Parent parent = FXMLLoader.load(getClass().getResource("/solacecontrolgui/MappingTest.fxml"));
-        Stage stage = new Stage();
         stage.setMaximized(true);
-        Scene scene = new Scene(parent);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
         
+        Scene scene = new Scene(parent);
         stage.setScene(scene);
         stage.setTitle("Mission Control");
         stage.show();
 
+        // Add one second before hiding the Homepage
+        TimeUnit.SECONDS.sleep(1);
+        ((Node)(event.getSource())).getScene().getWindow().hide();
 }
+
     
     
         @FXML
-    private void otherBtn(ActionEvent event) throws IOException {
-        // hides previous window
-        ((Node)(event.getSource())).getScene().getWindow().hide();
-        // sets up the stage
-        Parent parent = FXMLLoader.load(getClass().getResource("/solacecontrolgui/randompage.fxml"));
-        Stage stage = new Stage();
-        stage.setMaximized(true);
-        Scene scene = new Scene(parent);
+    private void userGuideBtn(ActionEvent event) throws IOException {
         
-        stage.setScene(scene);
-        stage.setTitle("Mission Control");
-        stage.show();
+        // Run a PDF File
+      try {
+
+          File file = new File(System.getProperty("user.dir") +"\\src\\solacecontrolgui\\pdf.pdf");
+          System.out.println(file);
+		if (file.exists()) {
+
+			Process p = Runtime
+			   .getRuntime()
+			   .exec("rundll32 url.dll,FileProtocolHandler " + file);
+			p.waitFor();
+				
+		} else {
+
+			System.out.println("PDF File Doesnt exist");
+
+		}
+
+		System.out.println("Done");
+
+  	  } catch (Exception ex) {
+		ex.printStackTrace();
+	  }
+
+    }
+    
+       @FXML
+    private void aboutBtn(ActionEvent event) throws IOException {
+        
+         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("About");
+                    alert.setHeaderText("Solace Control GUI");
+                    String s ="Created By Harley Hanger \nVersion 1.0 \n© Copyright 2018 © ";
+                    alert.setContentText(s);
+                    alert.show();
+                    
+                    
+        
+   
     }
     
     @Override
