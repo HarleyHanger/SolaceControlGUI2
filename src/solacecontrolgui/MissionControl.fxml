@@ -64,7 +64,7 @@
                <tabs>
                   <Tab fx:id="mpTab" closable="false" text="Mission Planning">
                      <content>
-                        <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="592.0" prefWidth="411.0">
+                        <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="565.0" prefWidth="411.0">
                            <children>
                               <ImageView fitHeight="150.0" fitWidth="281.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -330,14 +330,14 @@
                               </ScrollPane>
                               <VBox alignment="CENTER">
                                  <children>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="359.0">
+                                    <HBox alignment="CENTER" prefHeight="48.0" prefWidth="359.0">
                                        <children>
                                           <Button mnemonicParsing="false" onAction="#loadConfig" text="Load WayPoints">
                                              <font>
                                                 <Font size="16.0" />
                                              </font>
                                              <HBox.margin>
-                                                <Insets bottom="10.0" left="40.0" right="5.0" />
+                                                <Insets bottom="10.0" right="5.0" />
                                              </HBox.margin>
                                           </Button>
                                           <Button mnemonicParsing="false" onAction="#saveConfig" text="Save WayPoints">
@@ -356,9 +356,9 @@
                                           <Insets top="20.0" />
                                        </VBox.margin>
                                     </HBox>
-                                    <Label fx:id="fileLoadedName" text="File Loaded" textAlignment="CENTER">
+                                    <Label fx:id="fileLoadedName" alignment="CENTER" contentDisplay="CENTER" text="File Loaded" textAlignment="CENTER">
                                        <VBox.margin>
-                                          <Insets bottom="50.0" right="130.0" />
+                                          <Insets bottom="20.0" />
                                        </VBox.margin>
                                     </Label>
                                     <Button mnemonicParsing="false" onAction="#clearConfigBtn" text="Clear WayPoints">
@@ -523,35 +523,44 @@
                                     </ScrollPane>
                                     <VBox>
                                        <children>
-                                          <HBox alignment="CENTER">
+                                          <HBox alignment="CENTER" prefHeight="84.0" prefWidth="410.0">
                                              <children>
                                                 <Button fx:id="commsBtn" mnemonicParsing="false" onAction="#commsBtnPress" prefHeight="70.0" prefWidth="70.0" text="COMMS">
                                                    <HBox.margin>
-                                                      <Insets right="30.0" />
+                                                      <Insets bottom="5.0" right="5.0" top="5.0" />
                                                    </HBox.margin>
                                                 </Button>
                                                 <Button fx:id="bActiveButton" mnemonicParsing="false" onAction="#bActivePressed" prefHeight="70.0" prefWidth="70.0" text=" BOAT&#10;ACTIVE">
                                                    <HBox.margin>
-                                                      <Insets left="30.0" />
+                                                      <Insets bottom="5.0" left="5.0" top="5.0" />
                                                    </HBox.margin>
                                                 </Button>
                                              </children>
                                           </HBox>
                                        </children>
                                     </VBox>
-                                    <VBox alignment="CENTER">
-                                       <children>
-                                          <Button mnemonicParsing="false" onAction="#loadCurrentWaypoints" text="Current Config" />
-                                          <Button mnemonicParsing="false" onAction="#runConfig" text="Start Mission">
-                                             <font>
-                                                <Font size="16.0" />
-                                             </font>
-                                          </Button>
-                                       </children>
+                                    <HBox alignment="CENTER">
                                        <VBox.margin>
                                           <Insets bottom="20.0" />
                                        </VBox.margin>
-                                    </VBox>
+                                       <children>
+                                          <Button fx:id="startMBtn" mnemonicParsing="false" onAction="#runConfig" prefWidth="114.0" text="Start Mission">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets right="5.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button mnemonicParsing="false" onAction="#loadCurrentWaypoints" prefWidth="114.0" text="Current Config">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="5.0" />
+                                             </HBox.margin></Button>
+                                       </children>
+                                    </HBox>
                                     <HBox alignment="CENTER">
                                        <children>
                                           <Button mnemonicParsing="false" onAction="#eStop" prefHeight="46.0" prefWidth="248.0" style="-fx-background-color: #ff0000; -fx-border-color: #686868;" text="EMERGENCY STOP">

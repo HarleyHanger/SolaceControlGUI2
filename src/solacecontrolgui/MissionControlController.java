@@ -173,7 +173,7 @@ public class MissionControlController implements Initializable {
    
    // error buttons
    @FXML
-    private Button bActiveButton, commsBtn;
+    private Button bActiveButton, commsBtn, startMBtn;
    
    private int commsBtnStatus = 0;
    private int bActiveBtnStatus = 0;
@@ -209,6 +209,7 @@ public class MissionControlController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        startDisable(); 
         System.out.println( "Start UP LAT " + wayPointsLatMap);
         System.out.println( "Start UP Lon " + wayPointsLonMap);
         // Make spinner manually editable
@@ -284,6 +285,9 @@ public class MissionControlController implements Initializable {
         mapViewer.addMouseListener(new MouseAdapter(){
      public void mouseClicked(MouseEvent e) {
             if(e.getClickCount() == 1 && e.getButton() == MouseEvent.BUTTON3 && mcTab.isSelected() != true){
+                // Disable the Start Button
+                startDisable();
+                
                 java.awt.Point p = e.getPoint();
                 GeoPosition geo = mapViewer.convertPointToGeoPosition(p);
                 System.out.println("X:"+geo.getLatitude()+",Y:"+geo.getLongitude());
@@ -333,19 +337,6 @@ public class MissionControlController implements Initializable {
          
                 });
         
-       
-        // start the array for the boats position
-       
-
-
-
-        
-        System.out.println(" first one start");
-        updateLatLong(mapViewer);
-        System.out.println(" first one update");
-        
-        System.out.println(" first one worked");
-
         // create map inside the SwingNode
         createAndSetSwingMap(swingNode);
         
@@ -357,55 +348,16 @@ public class MissionControlController implements Initializable {
         lstFile= new ArrayList<>();
         lstFile.add("*.json");
     }    
-    
-    private void updateLatLong ( JXMapViewer mapViewer)
-    {
-        lati = mapViewer.getCenterPosition().getLatitude();
-        longi = mapViewer.getCenterPosition().getLongitude();
-        zoom = mapViewer.getZoom();
 
-        lati2 = String.valueOf(lati);
-        longi2 = String.valueOf(longi);
-        zoom2 = String.valueOf(zoom);
-      
-                
-                
-        //frame.setTitle(String.format("JXMapviewer2 Example 3 (%.2f / %.2f) - Zoom: %d", lat, lon, zoom));
-        System.out.println(" Lat" + lati2 + "Long" + longi2 +"zoom "+  zoom2 );
-       
-       
-    }
-    
-     private void updateLatLongDoubleClick ( JXMapViewer mapViewer)
-    {
-        /*
-        lati = mapViewer.getCenterPosition().getLatitude();
-        longi = mapViewer.getCenterPosition().getLongitude();
-        zoom = mapViewer.getZoom();
-
-        lati2 = String.valueOf(lati);
-        longi2 = String.valueOf(longi);
-        zoom2 = String.valueOf(zoom);
-        //swingNode.getContent().latLongLabel.setText("");
-       
-                
-                
-                
-        //frame.setTitle(String.format("JXMapviewer2 Example 3 (%.2f / %.2f) - Zoom: %d", lat, lon, zoom));
-        System.out.println(" Lat" + lati2 + "Long" + longi2 +"zoom "+  zoom2 );
-        wayPointsLatMap.add(lati2);
-        wayPointsLonMap.add(longi2);
-        System.out.println("lats =" + wayPointsLatMap );
-        System.out.println( "Longs =" + wayPointsLonMap);
-       */
-       
-    }
-    
+        
     
     @FXML
   private void loadConfig(ActionEvent event) {
         // when the load button is pressed
         fileOutput = null;
+        
+        // Enable Start Button
+        startEnable();
         
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Json Files" , lstFile));
         File f = fc.showOpenDialog(null);
@@ -635,13 +587,14 @@ public class MissionControlController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        startEnable();
     }
     }
     
      @FXML
     private void loadCurrentWaypoints(ActionEvent event) {
     
+        startDisable();
        try {
            URL boatD = new URL("http://52.232.121.121:3333/waypoints"); // URL to Parse
            URLConnection yc = boatD.openConnection();
@@ -728,6 +681,7 @@ public class MissionControlController implements Initializable {
     @FXML
     private void runConfig(ActionEvent event) {
     
+        
         
        //try {
            //tabPane.getSelectionModel().select(mcTab);
@@ -991,6 +945,7 @@ public class MissionControlController implements Initializable {
         e.printStackTrace();
 
      }
+           startDisable();
                   
     }
 
@@ -1150,8 +1105,13 @@ public class MissionControlController implements Initializable {
        @FXML
     private void eStop(ActionEvent event){
 
+        //Disable Start button
+        startDisable();
+        String EmergencyLat = boatPositionLat.toString().replace("]","");
+        String EmergencyLon = boatPositionLon.toString().replace("[","");
+       
+        String inputString = "{\n" + "  \"waypoints\": [\n" +"    " + EmergencyLat + "," + EmergencyLon + "\n" +"  ]\n" + "}";
         clearConfig();
-         
           try {
 
         URL url1 = new URL("http://52.232.121.121:3333/waypoints");
@@ -1159,28 +1119,12 @@ public class MissionControlController implements Initializable {
         conn1.setDoOutput(true);
         conn1.setRequestMethod("POST");
         conn1.setRequestProperty("Content-Type", "application/json");
-/* "{\n" +
-"  \"waypoints\": [\n" +
-"    [0.0, 0.0],\n" +
-"    [1.0, 1.0],\n" +
-"    [2.0, 2.0]\n" +
-"  ]\n" +
-"}";
-*/
-      
-        
-        String input = "{\n" +
-"  \"waypoints\": [\n" +
-"    " + boatPositionLat + "," + boatPositionLon + "\n" +
-"  ]\n" +
-"}";
-             
-        System.out.println("input " + input);
+   
+        System.out.println("input2 " + inputString);
 
         OutputStream os = conn1.getOutputStream();
-        os.write(input.getBytes());
-        
-        
+        os.write(inputString.getBytes());
+            
         os.flush();
 
         if (conn1.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
@@ -1263,7 +1207,7 @@ public class MissionControlController implements Initializable {
                
                      
                      boatPosition.add(   
-                new MyWaypoint ( "        Solace", Color.RED, new GeoPosition((Double.parseDouble(lat)), (Double.parseDouble(lon))))
+                new MyWaypoint ( "                Solace", Color.RED, new GeoPosition((Double.parseDouble(lat)), (Double.parseDouble(lon))))
                         
                  );
                          //System.out.println(boatPosition.toString());
@@ -1362,7 +1306,16 @@ public class MissionControlController implements Initializable {
   private void clearConfigBtn(ActionEvent event) {
       clearConfig();
   }
-  
+  @FXML
+  private void startDisable(){
+      System.out.println("mission Button Disabled");
+      startMBtn.setDisable(true);
+  }
+  @FXML
+  private void startEnable(){
+        System.out.println("mission Button Enabled");
+      startMBtn.setDisable(false);
+  }
 
   private void clearConfig() {
       
