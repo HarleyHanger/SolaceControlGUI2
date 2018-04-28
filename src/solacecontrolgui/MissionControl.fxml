@@ -384,9 +384,9 @@
                                        </image>
                                     </ImageView>
                                     <HBox alignment="CENTER" />
-                                    <ScrollPane hbarPolicy="NEVER" prefHeight="266.0" prefWidth="410.0" vbarPolicy="NEVER">
+                                    <ScrollPane hbarPolicy="NEVER" vbarPolicy="NEVER">
                                        <content>
-                                          <GridPane prefHeight="237.0" prefWidth="348.0">
+                                          <GridPane prefHeight="321.0" prefWidth="348.0">
                                             <columnConstraints>
                                                 <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="306.2222035725912" minWidth="10.0" prefWidth="170.0" />
                                                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="190.0" minWidth="10.0" prefWidth="190.0" />
@@ -400,6 +400,9 @@
                                                 <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
                                                 <RowConstraints maxHeight="40.0" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
                                                 <RowConstraints maxHeight="40.0" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="40.0" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
+                                              <RowConstraints maxHeight="40.0" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
+                                              <RowConstraints maxHeight="40.0" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
                                                 <RowConstraints maxHeight="40.0" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
@@ -475,7 +478,7 @@
                                                       <Font size="16.0" />
                                                    </font>
                                                 </TextField>
-                                                <Label alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="90.0" text="Speed: [ M/S ]" GridPane.rowIndex="3">
+                                                <Label alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="90.0" text="Speed: [knts]" GridPane.rowIndex="3">
                                                    <GridPane.margin>
                                                       <Insets />
                                                    </GridPane.margin>
@@ -541,7 +544,7 @@
                                           <Insets bottom="20.0" />
                                        </VBox.margin>
                                        <children>
-                                          <Button fx:id="startMBtn" mnemonicParsing="false" onAction="#runConfig" prefWidth="150.0" text="Upload Waypoints">
+                                          <Button fx:id="startMBtn" mnemonicParsing="false" onAction="#runConfig" prefWidth="114.0" text="Start Mission">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -549,7 +552,7 @@
                                                 <Insets right="5.0" />
                                              </HBox.margin>
                                           </Button>
-                                          <Button mnemonicParsing="false" onAction="#loadCurrentWaypoints" prefWidth="150.0" text="Current Waypoints">
+                                          <Button mnemonicParsing="false" onAction="#loadCurrentWaypoints" prefWidth="114.0" text="Current Config">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -565,7 +568,7 @@
                                                 <Font name="System Bold" size="20.0" />
                                              </font>
                                              <HBox.margin>
-                                                <Insets top="40.0" />
+                                                <Insets />
                                              </HBox.margin>
                                           </Button>
                                        </children>
