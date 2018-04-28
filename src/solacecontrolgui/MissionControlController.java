@@ -178,6 +178,8 @@ public class MissionControlController implements Initializable {
    private int commsBtnStatus = 0;
    private int bActiveBtnStatus = 0;
    
+   
+   
         double lati ;
         double longi ;
         int zoom;
@@ -246,7 +248,7 @@ public class MissionControlController implements Initializable {
         
         // Mapsetup
         
-// Create a TileFactoryInfo for OpenStreetMap
+        // Create a TileFactoryInfo for OpenStreetMap
         TileFactoryInfo info = new OSMTileFactoryInfo();
         DefaultTileFactory tileFactory = new DefaultTileFactory(info);
 
@@ -344,7 +346,7 @@ public class MissionControlController implements Initializable {
        commsBtn.setStyle("-fx-background-color: #008000");
 
         
-               // change this too allow more files to be loaded
+        // change this too allow more files to be loaded
         lstFile= new ArrayList<>();
         lstFile.add("*.json");
     }    
@@ -374,7 +376,7 @@ public class MissionControlController implements Initializable {
             System.out.println( "content 2" + content2 );
             String loadInputLine = content2;
             
-            
+           // Clear Configiuration 
            clearConfig();
            
            updateBoatMarker();
@@ -410,7 +412,7 @@ public class MissionControlController implements Initializable {
                         
                         waypoints.add(
 
-                        new MyWaypoint ( "        " + String.valueOf(w), Color.ORANGE, new GeoPosition((wayPointsLatMap.get(w)), (wayPointsLonMap.get(w))))
+                        new MyWaypoint ( "        " + String.valueOf(w+1), Color.ORANGE, new GeoPosition((wayPointsLatMap.get(w)), (wayPointsLonMap.get(w))))
                         //new MyWaypoint ( String.valueOf(i-1), Color.ORANGE, new GeoPosition((wayPointsLatMap.get(i-1)), (wayPointsLonMap.get(i-1))))
 
                         );
@@ -620,9 +622,6 @@ public class MissionControlController implements Initializable {
                     lat = position[0]; 
                     lon = position[1];
                     
-                    
-                   
-        
                     System.out.println("lat + " + lat + "long + " + lon);
                     String[] waypointsNumber = waypointOutput.split(",");
                     int positionLength = waypointsNumber.length;
@@ -681,215 +680,6 @@ public class MissionControlController implements Initializable {
     @FXML
     private void runConfig(ActionEvent event) {
     
-        
-        
-       //try {
-           //tabPane.getSelectionModel().select(mcTab);
-           // tabPane.getSelectionModel().select(mpTab);
-           
-           /*
-           System.out.println("Run config Pressed" );
-           
-           // the if statement below reads the text values from the spinners and checks to see if they are blank.
-           // if these values are blank and the way point is still active an error will be prompted to the user
-           if(startLatSpinner.getEditor().getText().equals("")
-           //checking the waypoints for latitude here
-           || wayPointLat1.getEditor().getText().equals("") && way1 == 1
-           || wayPointLat2.getEditor().getText().equals("") && way2 == 1
-           || wayPointLat3.getEditor().getText().equals("") && way3 == 1
-           || wayPointLat4.getEditor().getText().equals("") && way4 == 1
-           // end of checking waypoints for lat
-           || endLatitude.getEditor().getText().equals("")
-           || startLonSpinner.getEditor().getText().equals("")
-           // check the way points for longtitude
-           || wayPointLong1.getEditor().getText().equals("") && way1 == 1
-           || wayPointLong2.getEditor().getText().equals("") && way2 == 1
-           || wayPointLong3.getEditor().getText().equals("") && way3 == 1
-           || wayPointLong4.getEditor().getText().equals("") && way4 == 1
-           // end of checking waypoints for long
-           || endLongitude.getEditor().getText().equals("")
-           // end of if statement
-           ){
-           // Alert telling the user that a field has been missed
-           Alert alert = new Alert(AlertType.INFORMATION);
-           alert.setTitle("Missing Field");
-           alert.setHeaderText("A Field is Empty");
-           String s ="Please Enter Missing Field";
-           alert.setContentText(s);
-           alert.show();
-           System.out.println("Box is empty");
-           
-           }
-           
-           // this else if statement runs if there where no previous errors it then checks to see if the values are between 90 & -90 for latitude and if the waypoints are active or not
-           else if(Double.parseDouble(startLatSpinner.getEditor().getText()) > 90 || Double.parseDouble(startLatSpinner.getEditor().getText())< -90
-           || way1 == 1 && Double.parseDouble(wayPointLat1.getEditor().getText()) > 90 || way1 == 1 && Double.parseDouble(wayPointLat1.getEditor().getText())< -90
-           || way2 == 1 && Double.parseDouble(wayPointLat2.getEditor().getText()) > 90 || way2 == 1 && Double.parseDouble(wayPointLat2.getEditor().getText())< -90
-           || way3 == 1 && Double.parseDouble(wayPointLat3.getEditor().getText()) > 90 || way3 == 1 && Double.parseDouble(wayPointLat3.getEditor().getText())< -90
-           || way4 == 1 && Double.parseDouble(wayPointLat4.getEditor().getText()) > 90 || way4 == 1 && Double.parseDouble(wayPointLat4.getEditor().getText())< -90
-           || Double.parseDouble(endLatitude.getEditor().getText()) > 90 || Double.parseDouble(endLatitude.getEditor().getText())< -90
-           ){
-           //Alert telling the user if there was a latitude error
-           Alert alert = new Alert(AlertType.INFORMATION);
-           alert.setTitle("Latitude Invalid");
-           alert.setHeaderText("Latitude Input Invalid Error");
-           String s ="One or more of the latitudes did not range between 90  and - 90";
-           alert.setContentText(s);
-           alert.show();
-           
-           System.out.println("Lat Failed");
-           }
-           // this else if statement runs if there where no previous errors it then checks to see if the values are between 180 & -180 for the longitude and if the waypoints are active or not
-           else if(Double.parseDouble(startLonSpinner.getEditor().getText()) > 180 || Double.parseDouble(startLonSpinner.getEditor().getText())< -180
-           || way1 == 1 && Double.parseDouble(wayPointLong1.getEditor().getText()) > 180 || way1 == 1 && Double.parseDouble(wayPointLong1.getEditor().getText())< -180
-           || way2 == 1 && Double.parseDouble(wayPointLong2.getEditor().getText()) > 180 || way2 == 1 && Double.parseDouble(wayPointLong2.getEditor().getText())< -180
-           || way3 == 1 && Double.parseDouble(wayPointLong3.getEditor().getText()) > 180 || way3 == 1 && Double.parseDouble(wayPointLong3.getEditor().getText())< -180
-           || way4 == 1 && Double.parseDouble(wayPointLong4.getEditor().getText()) > 180 || way4 == 1 && Double.parseDouble(wayPointLong4.getEditor().getText())< -180
-           || Double.parseDouble(endLongitude.getEditor().getText()) > 180 || Double.parseDouble(endLongitude.getEditor().getText())< -180
-           ){
-           // Alert the user if there was an error with the longitude
-           Alert alert = new Alert(AlertType.INFORMATION);
-           alert.setTitle("Longitude Invalid");
-           alert.setHeaderText("Longitude Input Invalid Error");
-           String s ="One or more of the Longitudes did not range between 180  and - 180";
-           alert.setContentText(s);
-           alert.show();
-           
-           System.out.println("Long Failed");
-           
-           }
-           // if there are no errors then send the values.
-           else{
-           // Clear the arrays
-           waypointsLat.clear();
-           waypointsLong.clear();
-           
-           //String postStatement = ("waypoints POST \n" +"                    { \n" + "                        \"waypoints\": [");
-           
-           String startLatPost = startLatSpinner.getEditor().getText();
-           waypointsLat.add(startLatPost);
-           String startLongPost = startLonSpinner.getEditor().getText();
-           waypointsLong.add(startLongPost);
-           System.out.println(" Start Lon + " + startLonSpinner.getEditor().getText());
-           
-           System.out.println(" Start lat + " + startLatSpinner.getEditor().getText());
-           System.out.println(" Start Lon + " + startLonSpinner.getEditor().getText());
-           // the following if statements check to see if the waypoints are active or not.
-           // waypoint 1
-           if(way1 == 1){
-           String way1LatPost = wayPointLat1.getEditor().getText();
-           waypointsLat.add(way1LatPost);
-           String way1LongPost = wayPointLong1.getEditor().getText();
-           waypointsLong.add(way1LongPost);
-           System.out.println(" WayPoint 1 + " + wayPointLat1.getEditor().getText());
-           System.out.println(" Waypoint 1 + " + wayPointLong1.getEditor().getText());
-           
-           
-           }
-           // waypoint 2
-           if(way2 == 1){
-           
-           
-           String way2LatPost = wayPointLat2.getEditor().getText();
-           waypointsLat.add(way2LatPost);
-           String way2LongPost = wayPointLong2.getEditor().getText();
-           waypointsLong.add(way2LongPost);
-           System.out.println(" Waypoint 2  + " + wayPointLat2.getEditor().getText());
-           System.out.println(" Waypoint 2  + " + wayPointLong2.getEditor().getText());
-           }
-           // waypoint 3
-           if(way3 == 1){
-           
-           String way3LatPost = wayPointLat3.getEditor().getText();
-           waypointsLat.add(way3LatPost);
-           String way3LongPost = wayPointLong3.getEditor().getText();
-           waypointsLong.add(way3LongPost);
-           
-           System.out.println(" Waypoint 3  + " + wayPointLat3.getEditor().getText());
-           System.out.println(" Waypoint 3  + " + wayPointLong3.getEditor().getText());
-           }
-           // waypoint 4
-           if(way4 == 1){
-           
-           String way4LatPost = wayPointLat4.getEditor().getText();
-           waypointsLat.add(way4LatPost);
-           String way4LongPost = wayPointLong4.getEditor().getText();
-           waypointsLong.add(way4LongPost);
-           System.out.println(" Waypoint 4  + " + wayPointLat4.getEditor().getText());
-           System.out.println(" Waypoint 4  + " + wayPointLong4.getEditor().getText());
-           }
-           
-           String endLatPost = endLatitude.getEditor().getText();
-           waypointsLat.add(endLatPost);
-           String endLongPost = endLongitude.getEditor().getText();
-           waypointsLong.add(endLongPost);
-           
-           System.out.println(" End Lat  + " + endLatitude.getEditor().getText());
-           System.out.println(" End Long  + " + endLongitude.getEditor().getText());
-           
-           // PRINT OUT JSON
-           System.out.println("waypoints POST \n" +"                    { \n" +"                        \"waypoints\": [");
-           for (int i = 0; i < waypointsLat.size(); i++)
-           System.out.println("                        [" + waypointsLat.get(i) + "," + waypointsLong.get(i) + "]");
-           System.out.println("                        ] \n "+ "                    }" );
-           
-           // JSON PRINT out looks like below
-           
-           /* waypoints POST
-           {
-           "waypoints": [
-           [startLatPost , startLongPost],
-           [way1LatPost , way1LongPost],
-           [way2LatPost , way2LongPost],
-           [way3LatPost , way3LongPost],
-           [way4LatPost , way4LongPost],
-           [end , way4LongPost]
-           */
-           
-           // }
-           
-           
-           // Send Waypoints
-           
-           /*
-           String query = "http://52.232.121.121:3333/waypoints";
-           String json = "{" +
-"  \"waypoints\": [" +
-"    [10.0, 20.0]," +
-"    [11.0, 21.0]," +
-"    [24.0, 23.0]" +
-"  ]" +
-"}";
-           
-           URL url = new URL(query);
-           HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-           conn.setConnectTimeout(5000);
-           conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-           conn.setDoOutput(true);
-           conn.setDoInput(true);
-           conn.setRequestMethod("POST");
-           
-           OutputStream os = conn.getOutputStream();
-           os.write(json.getBytes("UTF-8"));
-           os.close();
-           
-           // read the response
-           InputStream in = new BufferedInputStream(conn.getInputStream());
-           String result = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
-           JSONObject jsonObject = new JSONObject(result);
-           
-           
-           in.close();
-           conn.disconnect();
-           
-            System.out.println("waypoints sent" + json);
-          
-       } catch (MalformedURLException ex) {
-           Logger.getLogger(MissionControlController.class.getName()).log(Level.SEVERE, null, ex);
-       } catch (IOException ex) {
-           Logger.getLogger(MissionControlController.class.getName()).log(Level.SEVERE, null, ex);
-       }
-           */
            
            try {
                
@@ -903,16 +693,8 @@ public class MissionControlController implements Initializable {
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");
 
-      //String input = content;
-        
-        String input = content; /* "{\n" +
-"  \"waypoints\": [\n" +
-"    [0.0, 0.0],\n" +
-"    [1.0, 1.0],\n" +
-"    [2.0, 2.0]\n" +
-"  ]\n" +
-"}";
-                */
+      
+        String input = content; 
 
         OutputStream os = conn.getOutputStream();
         os.write(input.getBytes());
@@ -987,13 +769,25 @@ public class MissionControlController implements Initializable {
                     // Used for boat position
                     lat = position[0]; 
                     lon = position[1];
+                   
                     
+                    // For when Boat active method is changed.
+                    if(activeOutput == "false") {
+                    // False should be RED in the future
+                    //commsBtn.setStyle("-fx-background-color: #FF0000");
+                    // False is green as the method hasnt been implemented on the BoatD server by simuations
+                    commsBtn.setStyle("-fx-background-color: #008800");
+                    // if implemented turn to 1
+                    bActiveBtnStatus = 0;
                     
-                    //System.out.println(activeOutput);
-                   // System.out.println(speedOutput);
-                   // System.out.println(aparentOutput);
-                   // System.out.println(absoluteOutput);
-                    //System.out.println("speed" + speedOutput);
+                    }
+                    
+                    if(activeOutput == "active") {
+                    commsBtn.setStyle("-fx-background-color: #008800");
+                    bActiveBtnStatus = 0;
+                    
+                    }
+                   
                    
                 
                     
@@ -1279,8 +1073,8 @@ public class MissionControlController implements Initializable {
           
       
        Alert alert = new Alert(AlertType.INFORMATION);
-                    alert.setTitle("Boat Status is fine");
-                    alert.setHeaderText("Boat Status is fine");
+                    alert.setTitle("Boat Status is Active");
+                    alert.setHeaderText("Boat Status is Active");
                     String s ="Boat Status is fine, Press OK";
                     alert.setContentText(s);
                     alert.show();
@@ -1305,6 +1099,7 @@ public class MissionControlController implements Initializable {
     @FXML
   private void clearConfigBtn(ActionEvent event) {
       clearConfig();
+      startDisable();
   }
   @FXML
   private void startDisable(){
@@ -1329,6 +1124,9 @@ public class MissionControlController implements Initializable {
        
        boatPosition.clear();
        waypoints.clear();
+       
+       fileLoadedName.setText("");
+      
                  
               
                

@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -58,12 +59,12 @@ public class HomePageController implements Initializable {
        
     @FXML
     private void missionControlBtn(ActionEvent event) throws Exception{
-        // hides previous window
-        ((Node)(event.getSource())).getScene().getWindow().hide();
+       
         // sets up the stage
         Parent parent = FXMLLoader.load(getClass().getResource("/solacecontrolgui/MissionControl.fxml"));
         Stage stage = new Stage();
-        //stage.setMaximized(true);
+        // Set Page Fullscreened windowed 
+        stage.setMaximized(true);
         //stage.initModality(Modality.APPLICATION_MODAL);
         //stage.initStyle(StageStyle.UNDECORATED);
         
@@ -71,13 +72,17 @@ public class HomePageController implements Initializable {
         stage.setScene(scene);
         stage.setTitle("Mission Control");
         stage.show();
+        
+        // Add one second before Hiding the HomePage
+         TimeUnit.SECONDS.sleep(1);
+        ((Node)(event.getSource())).getScene().getWindow().hide();
 
 }
 
         @FXML
     private void TestBtn(ActionEvent event) throws Exception{
         // hides previous window
-        ((Node)(event.getSource())).getScene().getWindow().hide();
+        
         // sets up the stage
         Parent parent = FXMLLoader.load(getClass().getResource("/solacecontrolgui/MappingTest.fxml"));
         Stage stage = new Stage();
