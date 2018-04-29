@@ -43,7 +43,7 @@
                         </HBox>
                      </center>
                      <left>
-                        <Button mnemonicParsing="false" onAction="#HomeBtn" prefWidth="90.0" style="-fx-background-color: transparent; -fx-text-fill: transparent;" text="Button" BorderPane.alignment="CENTER">
+                        <Button mnemonicParsing="false" onAction="#homeBtn" prefWidth="90.0" style="-fx-background-color: transparent; -fx-text-fill: transparent;" text="Button" BorderPane.alignment="CENTER">
                            <graphic>
                               <ImageView fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

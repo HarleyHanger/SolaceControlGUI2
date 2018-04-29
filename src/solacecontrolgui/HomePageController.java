@@ -89,7 +89,7 @@ public class HomePageController implements Initializable {
         // Run a PDF File
       try {
 
-          File file = new File(System.getProperty("user.dir") +"\\src\\solacecontrolgui\\pdf.pdf");
+          File file = new File(System.getProperty("user.dir") +"\\src\\solacecontrolgui\\PDF\\pdf.pdf");
           System.out.println(file);
 		if (file.exists()) {
 
