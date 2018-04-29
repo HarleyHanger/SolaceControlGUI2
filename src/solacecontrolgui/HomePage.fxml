@@ -49,20 +49,20 @@
          <center>
             <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <top>
-                  <VBox alignment="CENTER" prefHeight="41.0" prefWidth="1024.0">
+                  <VBox alignment="CENTER" prefHeight="41.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Label text="Control System Homepage" textAlignment="CENTER">
+                        <Label alignment="CENTER" prefHeight="49.0" prefWidth="1031.0" text="Control System Homepage" textAlignment="CENTER">
                            <font>
-                              <Font name="System Bold" size="46.0" />
+                              <Font name="System Bold" size="33.0" />
                            </font>
                         </Label>
                      </children>
                   </VBox>
                </top>
                <center>
-                  <VBox alignment="CENTER" prefHeight="470.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
+                  <VBox alignment="CENTER" prefHeight="354.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
                      <children>
-                        <VBox alignment="CENTER">
+                        <VBox alignment="CENTER" prefHeight="45.0" prefWidth="1024.0">
                            <children>
                               <ImageView fitHeight="88.0" fitWidth="231.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -92,8 +92,20 @@
                         </Button>
                         <Button fx:id="btn3" minHeight="40.0" minWidth="120.0" mnemonicParsing="false" onAction="#aboutBtn" text="About">
                            <VBox.margin>
-                              <Insets bottom="40.0" left="5.0" right="5.0" top="5.0" />
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
+                        </Button>
+                        <Button minHeight="40.0" minWidth="120.0" mnemonicParsing="false" onAction="#exitBtn">
+                           <VBox.margin>
+                              <Insets bottom="2.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                           <graphic>
+                              <ImageView fitHeight="35.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/powerbtn.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
                         </Button>
                      </children>
                   </VBox>

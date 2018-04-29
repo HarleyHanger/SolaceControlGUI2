@@ -25,6 +25,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
@@ -67,8 +68,8 @@ public class HomePageController implements Initializable {
         Parent parent = FXMLLoader.load(getClass().getResource("/solacecontrolgui/MissionControl.fxml"));
         Stage stage = new Stage();
         stage.setMaximized(true);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initStyle(StageStyle.UNDECORATED);
+        //stage.initModality(Modality.APPLICATION_MODAL);
+        //stage.initStyle(StageStyle.UNDECORATED);
         
         Scene scene = new Scene(parent);
         stage.setScene(scene);
@@ -126,20 +127,24 @@ public class HomePageController implements Initializable {
    
     }
     
+    @FXML
+    private void exitBtn(ActionEvent event) throws Exception{
+              Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("GUI Exit Button Pressed");
+                    alert.setHeaderText("Close GUI Button Pressed");
+                    String s ="Are you sure you want to Exit?";
+                    alert.setContentText(s);
+                    alert.showAndWait().ifPresent(response -> {
+                    if (response == ButtonType.OK) {
+                     System.exit(0);
+                      }
+                    });
+    }
+    
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-       
-    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
-    //get current date time with Date()
-    Date date = new Date();
-    System.out.println(dateFormat.format(date));
- 
-    //get current date time with Calendar()
-    Calendar cal = Calendar.getInstance();
-    System.out.println(dateFormat.format(cal.getTime()));
-  
-    
-     
         
+ 
     }
 }

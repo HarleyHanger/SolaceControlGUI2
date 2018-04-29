@@ -56,6 +56,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Spinner;
@@ -109,7 +110,9 @@ public class MissionControlController implements Initializable {
    @FXML 
     private AnchorPane ap;
    
-    String fileToLoad;    
+    String fileToLoad;   
+    
+    File initialDirectory = new File(System.getProperty("user.dir") +"\\src\\solacecontrolgui\\WaypointFiles");
     
     //Mission Setup
     
@@ -211,15 +214,8 @@ public class MissionControlController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        startDisable(); 
-        System.out.println( "Start UP LAT " + wayPointsLatMap);
-        System.out.println( "Start UP Lon " + wayPointsLonMap);
-        // Make spinner manually editable
-        
-        
-     
-       
-        
+
+ 
         
         // Mapsetup
         
@@ -264,6 +260,7 @@ public class MissionControlController implements Initializable {
             if(e.getClickCount() == 1 && e.getButton() == MouseEvent.BUTTON3 ){
                 // Disable the Start Button
                 startDisable();
+                fileLoadedName.setText("");
                 
                 java.awt.Point p = e.getPoint();
                 GeoPosition geo = mapViewer.convertPointToGeoPosition(p);
@@ -337,6 +334,7 @@ public class MissionControlController implements Initializable {
         startEnable();
         
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Json Files" , lstFile));
+        fc.setInitialDirectory(initialDirectory);
         File f = fc.showOpenDialog(null);
         
         fileOutput = f;
@@ -432,6 +430,7 @@ public class MissionControlController implements Initializable {
             // Create file chooser on the stage
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Save File");
+            fileChooser.setInitialDirectory(initialDirectory);
             File f = fileChooser.showSaveDialog(theStage);
               
             if (f!= null)
@@ -701,22 +700,24 @@ public class MissionControlController implements Initializable {
                
                // If the user wishes to show more decimal places on the heading , absolute and speed add on 0's to the decimal format
                NumberFormat formatter = new DecimalFormat("#0.0");  
-               Double speedDouble = Double.parseDouble(speed);
-               Double absolouteDouble = Double.parseDouble(absolute);
-               Double headingDouble = Double.parseDouble(headingOutput);
+               
                
                // New strings are made so that the data printed to file will be more accurate
-               String speed1 = formatter.format(speedDouble);
-               String absolute1 = formatter.format(absolouteDouble);
-               String headingOutput1 = formatter.format(headingDouble);
+               String speed1 = formatter.format(Double.parseDouble(speed));
+               String absolute1 = formatter.format(Double.parseDouble(absolute));
+               String headingOutput1 = formatter.format(Double.parseDouble(headingOutput));
              
+               // Formatting Latitude and longitude as new values so the file will be more accurate
+               NumberFormat formatter2 = new DecimalFormat("#0.00000");  
+               String latFormat = formatter2.format(Double.parseDouble(lat));
+               String lonFormat = formatter2.format(Double.parseDouble(lon));
                // active.setText(activeOutput);
                 windSpeed.setText(speed1);
                 windApparent.setText(apparent);
                 windAbsolute.setText(absolute1);
                 heading.setText(headingOutput1);
-                positionLat.setText(lat);
-                positionLon.setText(lon);
+                positionLat.setText(latFormat);
+                positionLon.setText(lonFormat);
                 updateBoatMarker();
                 //active.setText(activeOutput);
                 
@@ -734,7 +735,7 @@ public class MissionControlController implements Initializable {
                 try{
                final String dir = System.getProperty("user.dir");
                 FileWriter writer2;
-                File recordedData = new File(dir+"\\RecordedData\\RunData.csv");
+                File recordedData = new File(dir+"\\src\\solacecontrolgui\\RecordedData\\RunData.csv");
                 // true allows the file writer to append files
                 writer2 = new FileWriter(recordedData, true);
                 BufferedWriter buf = new BufferedWriter(writer2);
@@ -877,6 +878,23 @@ public class MissionControlController implements Initializable {
         ((Node)(event.getSource())).getScene().getWindow().hide();
 
 }
+     
+     // Log off button
+        @FXML
+    private void exitBtn(ActionEvent event) throws Exception{
+        
+              Alert alert = new Alert(AlertType.WARNING);
+                    alert.setTitle("GUI Exit Button Pressed");
+                    alert.setHeaderText("Close GUI Button Pressed");
+                    String s ="Are you sure you want to Exit?";
+                    alert.setContentText(s);
+                    alert.showAndWait().ifPresent(response -> {
+                    if (response == ButtonType.OK) {
+                     System.exit(0);
+                      }
+                    });
+    }
+    
 
 
     // this method is called by the initialze method and runs every three seconds
