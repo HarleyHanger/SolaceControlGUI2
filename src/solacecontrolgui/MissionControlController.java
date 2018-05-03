@@ -249,7 +249,7 @@ public class MissionControlController implements Initializable {
 
                    // change the second number below to increase / decrease the boats update timer
             ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-            executor.scheduleAtFixedRate(boatCurrentPosition, 0, 5, TimeUnit.SECONDS);
+            executor.scheduleAtFixedRate(boatCurrentPosition, 0, 1, TimeUnit.SECONDS);
 
 
 
@@ -386,7 +386,7 @@ public class MissionControlController implements Initializable {
 
                 }
             } catch (MalformedURLException ex) {
-                    Logger.getLogger(MappingTestController.class.getName()).log(Level.SEVERE, null, ex);
+                 
            
            
             } catch (IOException ex) {
@@ -695,7 +695,7 @@ public class MissionControlController implements Initializable {
     private void runConfig(ActionEvent event){
     
     try {
-               
+             startDisable();
             System.out.println("saveOutput" + fileOutput);
             String content = new Scanner(fileOutput).useDelimiter("\\Z").next();
             System.out.println("content is " + content);
@@ -713,6 +713,7 @@ public class MissionControlController implements Initializable {
             if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
                 throw new RuntimeException("Failed : HTTP error code : "
                     + conn.getResponseCode());
+              
             }
 
             BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
@@ -724,14 +725,13 @@ public class MissionControlController implements Initializable {
             }
 
             conn.disconnect();
-            startDisable();
+           
         } catch (MalformedURLException e) {
         } catch (IOException e) {
         }
-          
-                  
+
+      
     }
- 
        @FXML
     private void eStop(ActionEvent event){
 

@@ -25,7 +25,6 @@ public class SolaceControlGUI extends Application {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setMaximized(true);
-     
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setTitle("Login");
         stage.show();

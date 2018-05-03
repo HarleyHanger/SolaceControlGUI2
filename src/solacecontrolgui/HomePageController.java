@@ -68,8 +68,8 @@ public class HomePageController implements Initializable {
         Parent parent = FXMLLoader.load(getClass().getResource("/solacecontrolgui/MissionControl.fxml"));
         Stage stage = new Stage();
         stage.setMaximized(true);
-        //stage.initModality(Modality.APPLICATION_MODAL);
-        //stage.initStyle(StageStyle.UNDECORATED);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
         
         Scene scene = new Scene(parent);
         stage.setScene(scene);
@@ -89,7 +89,7 @@ public class HomePageController implements Initializable {
         // Run a PDF File
       try {
 
-          File file = new File(System.getProperty("user.dir") +"\\src\\solacecontrolgui\\PDF\\pdf.pdf");
+          File file = new File(System.getProperty("user.dir") +"\\src\\solacecontrolgui\\PDF\\UserGuide.pdf");
           System.out.println(file);
 		if (file.exists()) {
 
